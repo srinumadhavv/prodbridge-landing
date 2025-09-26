@@ -26,12 +26,34 @@ import {
   Moon,
   ChevronDown,
   HelpCircle,
-  Star
+  Star,
+  Globe,
+  RefreshCw,
+  ArrowLeft,
+  Home,
+  Eye,
+  EyeOff,
+  Settings,
+  UserCheck
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+
+// AWS Icons
+import {
+  AWSFrontEndWebMobileAmplify,
+  AWSManagementGovernanceCloudWatch,
+  AWSSecurityIdentityComplianceIdentityandAccessManagement,
+  AWSComputeLambda,
+  AWSManagementGovernanceOrganizations,
+  AWSAppIntegrationAPIGateway,
+  AWSMediaServicesKinesisVideoStreams,
+  AWSStorageSimpleStorageService,
+  AWSAppIntegrationAppSync,
+  AWSDatabaseDynamoDB
+} from 'yadl-aws-icons'
 
 export default function LandingPage() {
   // Light mode hover effects added
@@ -44,6 +66,10 @@ export default function LandingPage() {
   const [selectedCloud, setSelectedCloud] = useState('aws')
   const [isDarkMode, setIsDarkMode] = useState(true)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [selectedRole, setSelectedRole] = useState('ReadOnlyAccess')
+  const [isTracking, setIsTracking] = useState(true)
+  const [isPiiMasked, setIsPiiMasked] = useState(true)
+  const [currentUrl, setCurrentUrl] = useState('console.aws.amazon.com')
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -136,7 +162,7 @@ export default function LandingPage() {
       icon: <Activity className="w-6 h-6" />,
       title: "Real-time Monitoring",
       description: "Live metrics, logs, and performance insights",
-      color: "from-orange-500 to-red-500"
+      color: "from-orange-500 to-yellow-500"
     }
   ]
 
@@ -597,15 +623,15 @@ export default function LandingPage() {
               Without the{" "}
               <span className={`relative inline-block ${
                 isDarkMode
-                  ? 'bg-gradient-to-r from-pink-400 to-red-400 bg-clip-text text-transparent'
-                  : 'bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent'
+                  ? 'bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent'
+                  : 'bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent'
               }`}>
                 Risk
                 <motion.div
                   className={`absolute -bottom-2 left-0 h-1 bg-gradient-to-r ${
                     isDarkMode
-                      ? 'from-pink-400 to-red-400'
-                      : 'from-red-500 to-pink-500'
+                      ? 'from-yellow-400 to-orange-400'
+                      : 'from-yellow-500 to-orange-500'
                   } rounded-full`}
                   initial={{ width: 0 }}
                   animate={{ width: '100%' }}
@@ -725,8 +751,8 @@ export default function LandingPage() {
                     className={`w-full h-12 px-4 transition-all duration-500 ${
                       emailError
                         ? isDarkMode
-                          ? 'bg-red-500/10 border-red-400/50 text-white placeholder:text-gray-500 backdrop-blur-xl focus:bg-red-500/15 focus:border-red-400/70'
-                          : 'bg-red-50/90 border-red-300/60 text-slate-900 placeholder:text-slate-500 backdrop-blur-xl focus:border-red-400/80 focus:bg-red-50/95'
+                          ? 'bg-yellow-500/10 border-yellow-400/50 text-white placeholder:text-gray-500 backdrop-blur-xl focus:bg-yellow-500/15 focus:border-yellow-400/70'
+                          : 'bg-yellow-50/90 border-yellow-300/60 text-slate-900 placeholder:text-slate-500 backdrop-blur-xl focus:border-yellow-400/80 focus:bg-yellow-50/95'
                         : isDarkMode
                         ? 'bg-white/5 border-white/20 text-white placeholder:text-gray-500 backdrop-blur-xl focus:bg-white/10 focus:border-white/30'
                         : `bg-gray-50/90 border-gray-200/60 text-slate-900 placeholder:text-slate-500 backdrop-blur-xl
@@ -1037,7 +1063,7 @@ export default function LandingPage() {
           >
             <Badge className="mb-4 bg-purple-500/10 text-purple-400 border-purple-500/50">
               <Activity className="w-3 h-3 mr-1" />
-              Live Interface
+              Live AWS Access
             </Badge>
             <h2 className={`text-2xl lg:text-4xl xl:text-5xl font-bold mb-6 leading-tight tracking-tight ${
               isDarkMode ? 'text-white' : 'text-slate-900'
@@ -1054,17 +1080,17 @@ export default function LandingPage() {
             <p className={`text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed transition-colors duration-300 ${
               isDarkMode ? 'text-gray-400' : 'text-slate-600'
             }`} style={{ fontFamily: 'var(--font-inter)' }}>
-              Intuitive interface designed for{" "}
+              Direct cloud console access with{" "}
               <span className={`font-semibold ${
                 isDarkMode ? 'text-blue-300' : 'text-indigo-700'
               }`}>
-                rapid debugging.
+                full security tracking.
               </span>
-              {" "}Every tool you need, nothing you don't.
+              {" "}Native cloud experience, enhanced protection.
             </p>
           </motion.div>
 
-          {/* UI Mockup */}
+          {/* AWS Browser Interface */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -1075,25 +1101,46 @@ export default function LandingPage() {
                 : 'bg-gray-50/80 border border-gray-200/60 shadow-xl shadow-gray-200/20'
             }`}
           >
-            {/* Top Bar */}
-            <div className={`border-b px-6 py-4 transition-all duration-500 ${
+            {/* Browser Header */}
+            <div className={`border-b px-6 py-3 transition-all duration-500 ${
               isDarkMode
                 ? 'bg-gradient-to-r from-gray-900/90 to-black/90 border-white/10'
                 : 'bg-gradient-to-r from-gray-100/90 to-gray-50/90 border-gray-200/60'
             }`}>
               <div className="flex items-center justify-between">
+                {/* Left side - Window controls and navigation */}
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500" />
+                    <div className="w-3 h-3 rounded-full bg-yellow-500" />
                     <div className="w-3 h-3 rounded-full bg-yellow-500" />
                     <div className="w-3 h-3 rounded-full bg-green-500" />
                   </div>
-                  <div className={`text-sm transition-colors duration-300 ${
-                    isDarkMode ? 'text-gray-400' : 'text-gray-600'
-                  }`}>
-                    <span className="text-green-400">●</span> Connected to: production-us-east-1
+                  <div className="flex items-center space-x-2">
+                    <button className="p-1 rounded hover:bg-white/10">
+                      <ArrowLeft className="w-4 h-4 text-gray-400" />
+                    </button>
+                    <button className="p-1 rounded hover:bg-white/10">
+                      <RefreshCw className="w-4 h-4 text-gray-400" />
+                    </button>
+                    <button className="p-1 rounded hover:bg-white/10">
+                      <Home className="w-4 h-4 text-gray-400" />
+                    </button>
                   </div>
                 </div>
+
+                {/* Center - URL bar */}
+                <div className="flex-1 max-w-2xl mx-4">
+                  <div className={`flex items-center px-4 py-2 rounded-lg border transition-all ${
+                    isDarkMode
+                      ? 'bg-gray-800/50 border-gray-600/50 text-gray-300'
+                      : 'bg-white/70 border-gray-300/50 text-gray-700'
+                  }`}>
+                    <Globe className="w-4 h-4 mr-2 text-green-400" />
+                    <span className="text-sm font-mono truncate">{currentUrl}</span>
+                  </div>
+                </div>
+
+                {/* Right side - Session info */}
                 <div className="flex items-center space-x-3">
                   <Badge variant="outline" className="border-orange-500/50 text-orange-400">
                     <Clock className="w-3 h-3 mr-1" />
@@ -1101,509 +1148,416 @@ export default function LandingPage() {
                   </Badge>
                   <span className={`text-sm transition-colors duration-300 ${
                     isDarkMode ? 'text-gray-400' : 'text-gray-600'
-                  }`}>external team@debug.dev</span>
+                  }`}>contractor@debug.dev</span>
                 </div>
               </div>
             </div>
 
-            {/* Main Content */}
-            <div className="h-[600px] flex flex-col">
-              {/* Cloud Provider Tabs */}
-              <div className={`border-b px-6 py-3 transition-all duration-500 ${
-                isDarkMode ? 'border-white/10' : 'border-gray-200/50'
-              }`}>
-                <div className="flex items-center space-x-1">
-                  <button
-                    onClick={() => setSelectedCloud('aws')}
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                      selectedCloud === 'aws'
-                        ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30'
-                        : `transition-colors duration-300 ${
-                          isDarkMode
-                            ? 'text-gray-400 hover:text-white hover:bg-white/5'
-                            : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/50'
-                        }`
-                    }`}
-                  >
-                    <Cloud className="w-4 h-4" />
-                    <span>AWS</span>
-                  </button>
-                  <button
-                    onClick={() => setSelectedCloud('azure')}
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                      selectedCloud === 'azure'
-                        ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
-                        : `transition-colors duration-300 ${
-                          isDarkMode
-                            ? 'text-gray-400 hover:text-white hover:bg-white/5'
-                            : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/50'
-                        }`
-                    }`}
-                  >
-                    <Cloud className="w-4 h-4" />
-                    <span>Azure</span>
-                  </button>
-                  <button
-                    onClick={() => setSelectedCloud('gcp')}
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                      selectedCloud === 'gcp'
-                        ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                        : `transition-colors duration-300 ${
-                          isDarkMode
-                            ? 'text-gray-400 hover:text-white hover:bg-white/5'
-                            : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/50'
-                        }`
-                    }`}
-                  >
-                    <Cloud className="w-4 h-4" />
-                    <span>GCP</span>
-                  </button>
-                  <div className={`ml-4 text-xs transition-colors duration-300 ${
-                    isDarkMode ? 'text-gray-500' : 'text-gray-600'
-                  }`}>
-                    Region: {selectedCloud === 'aws' ? 'us-east-1' : selectedCloud === 'azure' ? 'East US' : 'us-central1'}
+            {/* Security Controls Bar */}
+            <div className={`border-b px-6 py-3 transition-all duration-500 ${
+              isDarkMode ? 'bg-gray-800/30 border-white/10' : 'bg-gray-100/50 border-gray-200/50'
+            }`}>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-6">
+                  {/* Role Assignment */}
+                  <div className="flex items-center space-x-2">
+                    <UserCheck className="w-4 h-4 text-blue-400" />
+                    <span className="text-sm text-gray-400">Role:</span>
+                    <select
+                      value={selectedRole}
+                      onChange={(e) => setSelectedRole(e.target.value)}
+                      className={`text-sm px-2 py-1 rounded border-0 outline-0 ${
+                        isDarkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-900'
+                      }`}
+                    >
+                      <option value="ReadOnlyAccess">ReadOnlyAccess</option>
+                      <option value="PowerUserAccess">PowerUserAccess</option>
+                      <option value="DatabaseAccess">DatabaseAccess</option>
+                      <option value="LogsAccess">LogsAccess</option>
+                    </select>
                   </div>
+
+                  {/* Tracking Toggle */}
+                  <div className="flex items-center space-x-2">
+                    <Activity className={`w-4 h-4 ${isTracking ? 'text-green-400' : 'text-gray-400'}`} />
+                    <span className="text-sm text-gray-400">Tracking:</span>
+                    <button
+                      onClick={() => setIsTracking(!isTracking)}
+                      className={`text-sm px-2 py-1 rounded ${
+                        isTracking
+                          ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+                          : 'bg-gray-600/20 text-gray-400 border border-gray-600/30'
+                      }`}
+                    >
+                      {isTracking ? 'ON' : 'OFF'}
+                    </button>
+                  </div>
+
+                  {/* PII Masking Toggle */}
+                  <div className="flex items-center space-x-2">
+                    {isPiiMasked ? <EyeOff className="w-4 h-4 text-purple-400" /> : <Eye className="w-4 h-4 text-gray-400" />}
+                    <span className="text-sm text-gray-400">PII Masking:</span>
+                    <button
+                      onClick={() => setIsPiiMasked(!isPiiMasked)}
+                      className={`text-sm px-2 py-1 rounded ${
+                        isPiiMasked
+                          ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
+                          : 'bg-gray-600/20 text-gray-400 border border-gray-600/30'
+                      }`}
+                    >
+                      {isPiiMasked ? 'ON' : 'OFF'}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-2 text-sm text-gray-400">
+                  <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                  <span>AWS Session Active</span>
                 </div>
               </div>
+            </div>
 
-              {/* Main Panel */}
-              <div className="flex-1 flex flex-col">
-                {/* Tabs */}
-                <div className={`flex items-center justify-between p-4 border-b transition-all duration-500 ${
-                  isDarkMode ? 'border-white/10' : 'border-gray-200/50'
-                }`}>
-                  <div className="flex items-center space-x-1">
-                    <button
-                      onClick={() => setActiveTab('overview')}
-                      className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                        activeTab === 'overview'
-                          ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
-                          : 'text-gray-400 hover:text-white hover:bg-white/5'
-                      }`}
-                    >
-                      <Activity className="w-4 h-4" />
-                      <span>Overview</span>
-                    </button>
-                    <button
-                      onClick={() => setActiveTab('logs')}
-                      className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                        activeTab === 'logs'
-                          ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
-                          : 'text-gray-400 hover:text-white hover:bg-white/5'
-                      }`}
-                    >
-                      <Terminal className="w-4 h-4" />
-                      <span>Logs</span>
-                    </button>
-                    <button
-                      onClick={() => setActiveTab('query')}
-                      className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                        activeTab === 'query'
-                          ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
-                          : 'text-gray-400 hover:text-white hover:bg-white/5'
-                      }`}
-                    >
-                      <Database className="w-4 h-4" />
-                      <span>Query</span>
-                    </button>
-                    <button
-                      onClick={() => setActiveTab('infrastructure')}
-                      className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                        activeTab === 'infrastructure'
-                          ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
-                          : 'text-gray-400 hover:text-white hover:bg-white/5'
-                      }`}
-                    >
-                      <Layers className="w-4 h-4" />
-                      <span>Infrastructure</span>
-                    </button>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <div className="flex items-center space-x-2 text-xs text-gray-400">
-                      <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                      <span>Live</span>
-                    </div>
-                    <button className="text-xs text-gray-400 hover:text-white transition-colors px-2 py-1 rounded border border-white/20">
-                      Export
-                    </button>
-                  </div>
-                </div>
-
-                {/* Content Area */}
-                <div className="flex-1 p-4 overflow-auto">
-                  {activeTab === 'overview' && (
-                    <div className="space-y-4">
-                      {/* Quick Stats */}
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <motion.div
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/20 rounded-lg p-3"
-                        >
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <div className="text-xs text-blue-400">Active Services</div>
-                              <div className="text-lg font-semibold text-white">47</div>
-                            </div>
-                            <Layers className="w-5 h-5 text-blue-400" />
-                          </div>
-                        </motion.div>
-                        <motion.div
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.1 }}
-                          className="bg-gradient-to-br from-green-500/10 to-green-600/5 border border-green-500/20 rounded-lg p-3"
-                        >
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <div className="text-xs text-green-400">Healthy</div>
-                              <div className="text-lg font-semibold text-white">98.4%</div>
-                            </div>
-                            <CheckCircle className="w-5 h-5 text-green-400" />
-                          </div>
-                        </motion.div>
-                        <motion.div
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.2 }}
-                          className="bg-gradient-to-br from-orange-500/10 to-orange-600/5 border border-orange-500/20 rounded-lg p-3"
-                        >
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <div className="text-xs text-orange-400">Alerts</div>
-                              <div className="text-lg font-semibold text-white">3</div>
-                            </div>
-                            <AlertCircle className="w-5 h-5 text-orange-400" />
-                          </div>
-                        </motion.div>
-                        <motion.div
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.3 }}
-                          className="bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-lg p-3"
-                        >
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <div className="text-xs text-purple-400">Requests/min</div>
-                              <div className="text-lg font-semibold text-white">2.4K</div>
-                            </div>
-                            <TrendingUp className="w-5 h-5 text-purple-400" />
-                          </div>
-                        </motion.div>
-                      </div>
-
-                      {/* Resource Groups */}
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                          <div className="flex items-center justify-between mb-3">
-                            <h4 className="text-sm font-semibold text-white">Compute Resources</h4>
-                            <Badge className="bg-blue-500/10 text-blue-400">
-                              {selectedCloud === 'aws' ? '8 services' : selectedCloud === 'azure' ? '5 resources' : '6 services'}
-                            </Badge>
-                          </div>
-                          <div className="space-y-2 text-sm">
-                            {selectedCloud === 'aws' && (
-                              <>
-                                <div className="flex items-center justify-between p-2 hover:bg-white/5 rounded cursor-pointer">
-                                  <div className="flex items-center space-x-2">
-                                    <Zap className="w-4 h-4 text-orange-400" />
-                                    <span className="text-gray-300">payment-processor</span>
-                                  </div>
-                                  <span className="text-green-400 text-xs">●</span>
-                                </div>
-                                <div className="flex items-center justify-between p-2 hover:bg-white/5 rounded cursor-pointer">
-                                  <div className="flex items-center space-x-2">
-                                    <Layers className="w-4 h-4 text-blue-400" />
-                                    <span className="text-gray-300">api-cluster</span>
-                                  </div>
-                                  <span className="text-green-400 text-xs">●</span>
-                                </div>
-                                <div className="flex items-center justify-between p-2 hover:bg-white/5 rounded cursor-pointer">
-                                  <div className="flex items-center space-x-2">
-                                    <Database className="w-4 h-4 text-purple-400" />
-                                    <span className="text-gray-300">prod-database</span>
-                                  </div>
-                                  <span className="text-yellow-400 text-xs">●</span>
-                                </div>
-                              </>
-                            )}
-                            {selectedCloud === 'azure' && (
-                              <>
-                                <div className="flex items-center justify-between p-2 hover:bg-white/5 rounded cursor-pointer">
-                                  <div className="flex items-center space-x-2">
-                                    <Zap className="w-4 h-4 text-blue-400" />
-                                    <span className="text-gray-300">payment-function</span>
-                                  </div>
-                                  <span className="text-green-400 text-xs">●</span>
-                                </div>
-                                <div className="flex items-center justify-between p-2 hover:bg-white/5 rounded cursor-pointer">
-                                  <div className="flex items-center space-x-2">
-                                    <Layers className="w-4 h-4 text-blue-400" />
-                                    <span className="text-gray-300">container-apps</span>
-                                  </div>
-                                  <span className="text-green-400 text-xs">●</span>
-                                </div>
-                              </>
-                            )}
-                            {selectedCloud === 'gcp' && (
-                              <>
-                                <div className="flex items-center justify-between p-2 hover:bg-white/5 rounded cursor-pointer">
-                                  <div className="flex items-center space-x-2">
-                                    <Zap className="w-4 h-4 text-green-400" />
-                                    <span className="text-gray-300">payment-cloud-function</span>
-                                  </div>
-                                  <span className="text-green-400 text-xs">●</span>
-                                </div>
-                                <div className="flex items-center justify-between p-2 hover:bg-white/5 rounded cursor-pointer">
-                                  <div className="flex items-center space-x-2">
-                                    <Layers className="w-4 h-4 text-green-400" />
-                                    <span className="text-gray-300">gke-cluster</span>
-                                  </div>
-                                  <span className="text-green-400 text-xs">●</span>
-                                </div>
-                              </>
-                            )}
-                          </div>
-                        </div>
-
-                        <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                          <div className="flex items-center justify-between mb-3">
-                            <h4 className="text-sm font-semibold text-white">Recent Issues</h4>
-                            <button className="text-xs text-gray-400 hover:text-white">View All</button>
-                          </div>
-                          <div className="space-y-2 text-sm">
-                            <motion.div
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              className="flex items-start space-x-3 p-2 rounded-lg bg-red-500/5 border border-red-500/20"
-                            >
-                              <AlertCircle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
-                              <div>
-                                <div className="text-gray-300">Database timeout</div>
-                                <div className="text-xs text-gray-500">payment-processor • 2m ago</div>
-                              </div>
-                            </motion.div>
-                            <motion.div
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: 0.1 }}
-                              className="flex items-start space-x-3 p-2 rounded-lg bg-yellow-500/5 border border-yellow-500/20"
-                            >
-                              <AlertCircle className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
-                              <div>
-                                <div className="text-gray-300">High memory usage</div>
-                                <div className="text-xs text-gray-500">api-service • 15m ago</div>
-                              </div>
-                            </motion.div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {activeTab === 'logs' && (
-                    <div className="space-y-2 font-mono text-sm">
-                      <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="flex items-start space-x-3"
-                      >
-                        <span className="text-gray-500">14:32:15</span>
-                        <span className="text-blue-400">[INFO]</span>
-                        <span className="text-gray-300">Payment service initialized successfully</span>
-                      </motion.div>
-                      <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="flex items-start space-x-3"
-                      >
-                        <span className="text-gray-500">14:32:18</span>
-                        <span className="text-yellow-400">[WARN]</span>
-                        <span className="text-gray-300">High memory usage detected: 85% of allocated</span>
-                      </motion.div>
-                      <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.3 }}
-                        className="flex items-start space-x-3 bg-red-500/10 border border-red-500/20 rounded-lg p-2"
-                      >
-                        <span className="text-gray-500">14:32:21</span>
-                        <span className="text-red-400">[ERROR]</span>
-                        <span className="text-gray-300">
-                          Connection timeout to RDS instance
-                          <div className="text-xs text-gray-500 mt-1">
-                            RequestId: abc-123-def | User: user_***45 (masked) | Duration: 30,001ms
-                          </div>
-                        </span>
-                      </motion.div>
-                      <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.4 }}
-                        className="flex items-start space-x-3"
-                      >
-                        <span className="text-gray-500">14:32:24</span>
-                        <span className="text-blue-400">[INFO]</span>
-                        <span className="text-gray-300">Retry attempt 1/3 for database connection</span>
-                      </motion.div>
-                      <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.5 }}
-                        className="flex items-start space-x-3"
-                      >
-                        <span className="text-gray-500">14:32:27</span>
-                        <span className="text-green-400">[SUCCESS]</span>
-                        <span className="text-gray-300">Database connection restored</span>
-                      </motion.div>
-                    </div>
-                  )}
-
-                  {activeTab === 'query' && (
-                    <div className="space-y-4">
-                      <div className="bg-gray-900/50 rounded-lg p-4 border border-white/10">
-                        <div className="font-mono text-sm text-gray-300">
-                          SELECT payment_id, status, created_at<br />
-                          FROM payments<br />
-                          WHERE status = &apos;failed&apos;<br />
-                          AND created_at &gt; NOW() - INTERVAL &apos;24 HOURS&apos;<br />
-                          LIMIT 100;
-                        </div>
-                      </div>
-                      <div className="flex items-center space-x-4 text-sm">
-                        <Badge className="bg-green-500/10 text-green-400 border-green-500/50">
-                          <CheckCircle className="w-3 h-3 mr-1" />
-                          Query validated
-                        </Badge>
-                        <span className="text-gray-400">Est. cost: $0.03</span>
-                        <span className="text-gray-400">PII fields: Auto-masked</span>
-                      </div>
-                    </div>
-                  )}
-
-                  {activeTab === 'infrastructure' && (
-                    <div className="space-y-4">
-                      <div className="grid md:grid-cols-3 gap-4">
-                        {/* Compute */}
-                        <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                          <div className="flex items-center space-x-2 mb-3">
-                            <Zap className={`w-5 h-5 ${selectedCloud === 'aws' ? 'text-orange-400' : selectedCloud === 'azure' ? 'text-blue-400' : 'text-green-400'}`} />
-                            <h4 className="font-semibold text-white">
-                              {selectedCloud === 'aws' ? 'Lambda' : selectedCloud === 'azure' ? 'Functions' : 'Cloud Functions'}
-                            </h4>
-                          </div>
-                          <div className="space-y-2 text-sm">
-                            <div className="flex justify-between">
-                              <span className="text-gray-400">Functions</span>
-                              <span className="text-white">12</span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="text-gray-400">Invocations/min</span>
-                              <span className="text-green-400">847</span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="text-gray-400">Avg Duration</span>
-                              <span className="text-blue-400">234ms</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Storage */}
-                        <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                          <div className="flex items-center space-x-2 mb-3">
-                            <Database className={`w-5 h-5 ${selectedCloud === 'aws' ? 'text-purple-400' : selectedCloud === 'azure' ? 'text-blue-400' : 'text-green-400'}`} />
-                            <h4 className="font-semibold text-white">
-                              {selectedCloud === 'aws' ? 'RDS' : selectedCloud === 'azure' ? 'SQL Database' : 'Cloud SQL'}
-                            </h4>
-                          </div>
-                          <div className="space-y-2 text-sm">
-                            <div className="flex justify-between">
-                              <span className="text-gray-400">Instances</span>
-                              <span className="text-white">3</span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="text-gray-400">Connections</span>
-                              <span className="text-yellow-400">45/100</span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="text-gray-400">Query Time</span>
-                              <span className="text-green-400">12ms</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Containers */}
-                        <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                          <div className="flex items-center space-x-2 mb-3">
-                            <Layers className={`w-5 h-5 ${selectedCloud === 'aws' ? 'text-blue-400' : selectedCloud === 'azure' ? 'text-blue-400' : 'text-green-400'}`} />
-                            <h4 className="font-semibold text-white">
-                              {selectedCloud === 'aws' ? 'ECS' : selectedCloud === 'azure' ? 'Container Apps' : 'GKE'}
-                            </h4>
-                          </div>
-                          <div className="space-y-2 text-sm">
-                            <div className="flex justify-between">
-                              <span className="text-gray-400">Services</span>
-                              <span className="text-white">8</span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="text-gray-400">Running Tasks</span>
-                              <span className="text-green-400">24/30</span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span className="text-gray-400">CPU Usage</span>
-                              <span className="text-yellow-400">67%</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Resource Map */}
-                      <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                        <h4 className="font-semibold text-white mb-3">Resource Topology</h4>
-                        <div className="flex items-center justify-center space-x-8 py-6">
-                          <div className="flex flex-col items-center space-y-2">
-                            <div className={`w-12 h-12 rounded-full ${selectedCloud === 'aws' ? 'bg-orange-500/20 border-orange-500' : selectedCloud === 'azure' ? 'bg-blue-500/20 border-blue-500' : 'bg-green-500/20 border-green-500'} border-2 flex items-center justify-center`}>
-                              <Users className="w-6 h-6 text-white" />
-                            </div>
-                            <span className="text-xs text-gray-400">Load Balancer</span>
-                          </div>
-                          <ArrowRight className="w-4 h-4 text-gray-500" />
-                          <div className="flex flex-col items-center space-y-2">
-                            <div className={`w-12 h-12 rounded-full ${selectedCloud === 'aws' ? 'bg-blue-500/20 border-blue-500' : selectedCloud === 'azure' ? 'bg-blue-500/20 border-blue-500' : 'bg-green-500/20 border-green-500'} border-2 flex items-center justify-center`}>
-                              <Layers className="w-6 h-6 text-white" />
-                            </div>
-                            <span className="text-xs text-gray-400">App Services</span>
-                          </div>
-                          <ArrowRight className="w-4 h-4 text-gray-500" />
-                          <div className="flex flex-col items-center space-y-2">
-                            <div className={`w-12 h-12 rounded-full ${selectedCloud === 'aws' ? 'bg-purple-500/20 border-purple-500' : selectedCloud === 'azure' ? 'bg-blue-500/20 border-blue-500' : 'bg-green-500/20 border-green-500'} border-2 flex items-center justify-center`}>
-                              <Database className="w-6 h-6 text-white" />
-                            </div>
-                            <span className="text-xs text-gray-400">Database</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Bottom Bar */}
-                <div className="border-t border-white/10 px-4 py-3 flex items-center justify-between">
+            {/* AWS Console Frame */}
+            <div className="h-[600px] flex flex-col">
+              {/* AWS Console Simulation */}
+              <div className="flex-1 bg-gray-50">
+                {/* AWS Console Navigation Bar */}
+                <div className="bg-black text-white px-4 py-2 flex items-center justify-between">
                   <div className="flex items-center space-x-4">
-                    <button className="text-sm text-gray-400 hover:text-white transition-colors">
-                      <Search className="w-4 h-4 inline mr-1" />
-                      Filter
-                    </button>
-                    <button className="text-sm text-gray-400 hover:text-white transition-colors">
-                      Export
-                    </button>
+                    {/* AWS Logo */}
+                    <div className="flex items-center space-x-3">
+                      <div className="flex items-center">
+                        <img
+                          src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
+                          alt="AWS"
+                          className="h-6 w-auto"
+                        />
+                      </div>
+                      <span className="text-sm font-medium">Management Console</span>
+                    </div>
+
+                    {/* Services Menu */}
+                    <div className="flex items-center space-x-1">
+                      <button className="px-3 py-1 text-sm text-gray-300 hover:text-white hover:bg-gray-700 rounded">
+                        Services
+                      </button>
+                      <ChevronDown className="w-4 h-4 text-gray-400" />
+                    </div>
                   </div>
-                  <div className="text-xs text-gray-500">
-                    Auto-refresh: ON | Showing last 5 minutes
+
+                  <div className="flex items-center space-x-4">
+                    {/* Region Selector */}
+                    <div className="flex items-center space-x-1 text-sm text-gray-300">
+                      <span>US East (N. Virginia)</span>
+                      <ChevronDown className="w-4 h-4" />
+                    </div>
+
+                    {/* User Menu */}
+                    <div className="flex items-center space-x-1 text-sm text-gray-300">
+                      <span>external-contractor@</span>
+                      <ChevronDown className="w-4 h-4" />
+                    </div>
                   </div>
                 </div>
+
+                {/* AWS Console Header */}
+                <div className="bg-white border-b border-gray-200">
+                  <div className="px-6 py-4">
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center space-x-4">
+                        <h1 className="text-2xl font-medium text-gray-900">Console Home</h1>
+                        <div className="text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded">Info</div>
+                      </div>
+                      <div className="flex items-center space-x-4">
+                        <button className="text-sm text-blue-600 bg-blue-100 px-3 py-1 rounded hover:bg-blue-200">
+                          Reset to default layout
+                        </button>
+                        <button className="text-white bg-[#FF9900] px-3 py-1 rounded text-sm hover:bg-[#E88B00]">
+                          + Add widgets
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* AWS Console Content Area */}
+                <div className="flex-1 bg-gray-50 px-6 py-4">
+                  <div className="grid grid-cols-2 gap-6 mb-6">
+                    {/* Recently visited */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="bg-white rounded-lg border border-gray-200 shadow-sm"
+                    >
+                      <div className="px-6 py-4 border-b border-gray-200">
+                        <div className="flex justify-between items-center">
+                          <div className="flex items-center space-x-2">
+                            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <h2 className="text-lg font-medium text-gray-900">Recently visited</h2>
+                            <div className="text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded">Info</div>
+                          </div>
+                          <button className="text-gray-400 hover:text-gray-600">⋯</button>
+                        </div>
+                      </div>
+                      <div className="p-6">
+                        <div className="grid grid-cols-2 gap-2">
+                          <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                            <div className="w-6 h-6 flex items-center justify-center">
+                              <AWSFrontEndWebMobileAmplify width={24} height={24} />
+                            </div>
+                            <span className="text-blue-600 text-sm hover:underline">AWS Amplify</span>
+                          </div>
+
+                          <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                            <div className="w-6 h-6 flex items-center justify-center">
+                              <AWSManagementGovernanceCloudWatch width={24} height={24} />
+                            </div>
+                            <span className="text-blue-600 text-sm hover:underline">CloudWatch</span>
+                          </div>
+
+                          <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                            <div className="w-6 h-6 flex items-center justify-center">
+                              <AWSSecurityIdentityComplianceIdentityandAccessManagement width={24} height={24} />
+                            </div>
+                            <span className="text-blue-600 text-sm hover:underline">IAM</span>
+                          </div>
+
+                          <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                            <div className="w-6 h-6 flex items-center justify-center">
+                              <AWSComputeLambda width={24} height={24} />
+                            </div>
+                            <span className="text-blue-600 text-sm hover:underline">Lambda</span>
+                          </div>
+
+                          <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                            <div className="w-6 h-6 flex items-center justify-center">
+                              <AWSManagementGovernanceOrganizations width={24} height={24} />
+                            </div>
+                            <span className="text-blue-600 text-sm hover:underline">AWS Organizations</span>
+                          </div>
+
+                          <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                            <div className="w-6 h-6 flex items-center justify-center">
+                              <AWSAppIntegrationAPIGateway width={24} height={24} />
+                            </div>
+                            <span className="text-blue-600 text-sm hover:underline">API Gateway</span>
+                          </div>
+
+                          <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                            <div className="w-6 h-6 flex items-center justify-center">
+                              <AWSMediaServicesKinesisVideoStreams width={24} height={24} />
+                            </div>
+                            <span className="text-blue-600 text-sm hover:underline">Kinesis Video Streams</span>
+                          </div>
+
+                          <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                            <div className="w-6 h-6 flex items-center justify-center">
+                              <AWSStorageSimpleStorageService width={24} height={24} />
+                            </div>
+                            <span className="text-blue-600 text-sm hover:underline">S3</span>
+                          </div>
+
+                          <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                            <div className="w-6 h-6 flex items-center justify-center">
+                              <AWSAppIntegrationAppSync width={24} height={24} />
+                            </div>
+                            <span className="text-blue-600 text-sm hover:underline">AWS AppSync</span>
+                          </div>
+
+                          <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                            <div className="w-6 h-6 flex items-center justify-center">
+                              <AWSDatabaseDynamoDB width={24} height={24} />
+                            </div>
+                            <span className="text-blue-600 text-sm hover:underline">DynamoDB</span>
+                          </div>
+                        </div>
+                        <div className="mt-4 text-center">
+                          <button className="text-blue-600 text-sm hover:underline">View all services</button>
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    {/* Applications */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 }}
+                      className="bg-white rounded-lg border border-gray-200 shadow-sm"
+                    >
+                      <div className="px-6 py-4 border-b border-gray-200">
+                        <div className="flex justify-between items-center">
+                          <div className="flex items-center space-x-2">
+                            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <h2 className="text-lg font-medium text-gray-900">Applications (0)</h2>
+                            <div className="text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded">Info</div>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <span className="text-sm text-gray-600">Region: US East (N. Virginia)</span>
+                            <button className="text-gray-400 hover:text-gray-600">⋯</button>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="p-6">
+                        <div className="text-center py-8 text-gray-500">
+                          <div className="mb-4">
+                            <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-lg flex items-center justify-center">
+                              <svg className="w-8 h-8 text-gray-400" viewBox="0 0 24 24" fill="currentColor">
+                                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+                                <line x1="12" y1="18" x2="12.01" y2="18"/>
+                              </svg>
+                            </div>
+                          </div>
+                          <p className="text-sm mb-4">No applications</p>
+                          <p className="text-xs mb-4 text-gray-400">Get started by creating an application.</p>
+                          <button disabled className="bg-gray-200 text-gray-400 px-4 py-2 text-sm rounded cursor-not-allowed">
+                            Create application
+                          </button>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+
+                  {/* Bottom section - 3 column layout */}
+                  <div className="grid grid-cols-3 gap-6">
+                    {/* Welcome to AWS */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                      className="bg-white rounded-lg border border-gray-200 shadow-sm"
+                    >
+                      <div className="px-6 py-4 border-b border-gray-200">
+                        <div className="flex justify-between items-center">
+                          <div className="flex items-center space-x-2">
+                            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <h2 className="text-lg font-medium text-gray-900">Welcome to AWS</h2>
+                          </div>
+                          <button className="text-gray-400 hover:text-gray-600">⋯</button>
+                        </div>
+                      </div>
+                      <div className="p-6 space-y-4">
+                        <div className="flex items-start space-x-3">
+                          <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <span className="text-blue-600 text-lg">🚀</span>
+                          </div>
+                          <div>
+                            <h4 className="text-blue-600 text-sm font-medium hover:underline cursor-pointer">
+                              Getting started with AWS ↗
+                            </h4>
+                            <p className="text-xs text-gray-600 mt-1">
+                              Learn the fundamentals and find valuable information to get the most out of AWS.
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-start space-x-3">
+                          <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <span className="text-blue-600 text-lg">🎓</span>
+                          </div>
+                          <div>
+                            <h4 className="text-blue-600 text-sm font-medium hover:underline cursor-pointer">
+                              Training and certification ↗
+                            </h4>
+                            <p className="text-xs text-gray-600 mt-1">
+                              Learn from AWS experts and advance your skills and knowledge.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    {/* AWS Health */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                      className="bg-white rounded-lg border border-gray-200 shadow-sm"
+                    >
+                      <div className="px-6 py-4 border-b border-gray-200">
+                        <div className="flex justify-between items-center">
+                          <div className="flex items-center space-x-2">
+                            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <h2 className="text-lg font-medium text-gray-900">AWS Health</h2>
+                            <div className="text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded">Info</div>
+                          </div>
+                          <button className="text-gray-400 hover:text-gray-600">⋯</button>
+                        </div>
+                      </div>
+                      <div className="p-6 space-y-4">
+                        <div>
+                          <div className="text-xs text-gray-600 mb-1">Open issues</div>
+                          <div className="text-2xl font-bold text-gray-900">0</div>
+                          <div className="text-xs text-gray-500">Past 7 days</div>
+                        </div>
+
+                        <div>
+                          <div className="text-xs text-gray-600 mb-1">Scheduled changes</div>
+                          <div className="text-2xl font-bold text-gray-900">0</div>
+                          <div className="text-xs text-gray-500">Upcoming and past 7 days</div>
+                        </div>
+
+                        <div>
+                          <div className="text-xs text-gray-600 mb-1">Other notifications</div>
+                          <div className="text-2xl font-bold text-gray-900">0</div>
+                          <div className="text-xs text-gray-500">Past 7 days</div>
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    {/* Cost and usage */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 }}
+                      className="bg-white rounded-lg border border-gray-200 shadow-sm"
+                    >
+                      <div className="px-6 py-4 border-b border-gray-200">
+                        <div className="flex justify-between items-center">
+                          <div className="flex items-center space-x-2">
+                            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <h2 className="text-lg font-medium text-gray-900">Cost and usage</h2>
+                            <div className="text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded">Info</div>
+                          </div>
+                          <button className="text-gray-400 hover:text-gray-600">⋯</button>
+                        </div>
+                      </div>
+                      <div className="p-6 space-y-4">
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <div className="text-xs text-gray-600">Current month</div>
+                            <div className="text-lg font-bold text-blue-600">$0.05</div>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-xs text-gray-600">Cost ($)</div>
+                            <div className="text-lg font-bold text-gray-900">0</div>
+                          </div>
+                        </div>
+
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <div className="text-xs text-gray-600">Forecasted month end</div>
+                            <div className="text-lg font-bold text-blue-600 flex items-center">
+                              $0.05
+                              <span className="text-xs text-green-600 ml-1">▲ 400%</span>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-xs text-gray-600">0</div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <div className="text-xs text-gray-600 mb-1">Savings opportunities</div>
+                          <div className="text-blue-600 text-xs hover:underline cursor-pointer flex items-center">
+                            <span className="mr-1">⚠️</span>
+                            Not enabled
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </motion.div>
@@ -1687,8 +1641,8 @@ export default function LandingPage() {
               External Team Access is{" "}
               <span className={`bg-gradient-to-r bg-clip-text text-transparent ${
                 isDarkMode
-                  ? 'from-red-400 via-orange-400 to-yellow-400'
-                  : 'from-red-600 via-orange-600 to-yellow-600'
+                  ? 'from-yellow-400 via-orange-400 to-yellow-200'
+                  : 'from-yellow-600 via-orange-600 to-yellow-400'
               }`}>
                 Broken Today
               </span>
@@ -1709,12 +1663,12 @@ export default function LandingPage() {
               viewport={{ once: true }}
               className={`backdrop-blur-xl p-8 rounded-2xl transition-all duration-300 ${
                 isDarkMode
-                  ? 'bg-red-500/5 border border-red-500/20'
-                  : 'bg-red-50/70 border border-red-200/60 shadow-[0_4px_16px_0_rgba(239,68,68,0.08)]'
+                  ? 'bg-yellow-500/5 border border-yellow-500/20'
+                  : 'bg-yellow-50/70 border border-yellow-200/60 shadow-[0_4px_16px_0_rgba(251,191,36,0.08)]'
               }`}
             >
               <div className="flex items-center mb-6">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500 to-orange-600 p-3 mr-4">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-500 to-orange-600 p-3 mr-4">
                   <AlertCircle className="w-6 h-6 text-white" />
                 </div>
                 <h3 className={`text-xl font-bold transition-colors duration-300 ${
@@ -1732,7 +1686,7 @@ export default function LandingPage() {
                   "Security incidents waiting to happen"
                 ].map((problem, index) => (
                   <div key={index} className="flex items-start space-x-3">
-                    <div className="w-2 h-2 rounded-full bg-red-500 mt-2 flex-shrink-0" />
+                    <div className="w-2 h-2 rounded-full bg-yellow-500 mt-2 flex-shrink-0" />
                     <span className={`text-sm transition-colors duration-300 ${
                       isDarkMode ? 'text-gray-300' : 'text-slate-700'
                     }`}>{problem}</span>

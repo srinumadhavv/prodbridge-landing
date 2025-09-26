@@ -9,15 +9,11 @@ import {
   User,
   Calendar,
   Tag,
-  Shield,
-  Database,
-  Terminal,
-  Users,
-  TrendingUp,
   BookOpen,
   ExternalLink
 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
+import { blogPosts } from './blogPosts'
 
 export default function BlogPage() {
   const [isDarkMode, setIsDarkMode] = useState(true)
@@ -37,214 +33,6 @@ export default function BlogPage() {
     setIsDarkMode(newTheme)
     localStorage.setItem('theme', newTheme ? 'dark' : 'light')
   }
-
-  const blogPosts = [
-    {
-      id: 1,
-      title: "The Hidden Costs of Shared Production Credentials",
-      excerpt: "Every shared SSH key or database password represents a security incident waiting to happen. Learn why traditional access methods are costing enterprises millions.",
-      content: `When engineering teams share production credentials with external contractors, consultants, or vendors, they unknowingly create a cascade of security and operational risks that can cost millions.
-
-## The Real Cost of Shared Credentials
-
-**Security Incidents:** 67% of data breaches involve compromised credentials. When you share production access, you multiply this risk exponentially.
-
-**Compliance Violations:** GDPR fines can reach €20 million. SOX violations can result in criminal charges. Shared credentials make compliance audits a nightmare.
-
-**Operational Overhead:** IT teams spend 40% of their time managing access requests, credential rotations, and access reviews.
-
-## The EPHIMERA Solution
-
-Instead of sharing credentials, EPHIMERA creates ephemeral access sessions that:
-- Automatically expire after set time limits
-- Provide complete audit trails of every action
-- Mask sensitive data in real-time
-- Require zero permanent credential sharing
-
-## Case Study: Healthcare SaaS Company
-
-A healthcare SaaS company was spending $2M annually on compliance audits due to shared database credentials with their external QA team. After implementing ephemeral access:
-
-- **90% reduction** in compliance audit time
-- **100% elimination** of shared credentials
-- **Zero security incidents** related to external access
-- **$1.8M annual savings** in audit and remediation costs
-
-The ROI was clear within the first quarter of implementation.`,
-      author: "Security Team",
-      date: "2024-12-15",
-      readTime: "5 min read",
-      category: "Security",
-      tags: ["Security", "Compliance", "ROI"],
-      icon: Shield
-    },
-    {
-      id: 2,
-      title: "Ephemeral Access vs Traditional SSH: A Technical Deep Dive",
-      excerpt: "Understand the architectural differences between traditional SSH access and ephemeral access patterns. See why major tech companies are making the switch.",
-      content: `Traditional SSH access was designed for a different era. Today's cloud-native, distributed systems require a fundamentally different approach to secure access.
-
-## Traditional SSH Architecture
-
-\`\`\`bash
-# Traditional approach - DANGEROUS
-ssh -i contractor_key user@production-server
-mysql -u shared_user -p shared_password production_db
-\`\`\`
-
-**Problems with this approach:**
-- Credentials exist permanently
-- No session boundaries or time limits
-- Minimal audit capabilities
-- Credential rotation is manual and error-prone
-
-## Ephemeral Access Architecture
-
-\`\`\`javascript
-// Ephemera approach - SECURE
-const session = await ephimera.createSession({
-  user: 'contractor@company.com',
-  resources: ['prod-db', 'logs', 'metrics'],
-  duration: '4h',
-  permissions: ['read', 'debug'],
-  auditLevel: 'complete'
-});
-
-// Session automatically expires and self-destructs
-\`\`\`
-
-## Technical Advantages
-
-**1. Session Isolation**
-Each access session is completely isolated with its own:
-- Temporary credentials that auto-expire
-- Scoped permissions
-- Network isolation boundaries
-- Audit trail correlation IDs
-
-**2. Zero Trust by Design**
-- Every action requires re-authentication
-- Permissions are evaluated in real-time
-- Continuous security posture assessment
-- Automatic anomaly detection
-
-**3. Cloud-Native Integration**
-- Works seamlessly with AWS IAM, Azure AD, GCP Identity
-- Integrates with existing SIEM systems
-- Supports Kubernetes RBAC
-- API-first architecture for automation
-
-## Performance Comparison
-
-| Metric | SSH | Ephemeral Access |
-|--------|-----|------------------|
-| Session Setup | 30+ minutes | <30 seconds |
-| Credential Management | Manual | Automatic |
-| Audit Granularity | Basic logs | Complete trail |
-| Compliance Ready | Manual process | Built-in |
-| Security Incidents | High risk | Near-zero risk |
-
-The technical superiority is clear: ephemeral access isn't just more secure, it's more efficient.`,
-      author: "Engineering Team",
-      date: "2024-12-12",
-      readTime: "8 min read",
-      category: "Technical",
-      tags: ["Architecture", "SSH", "Security"],
-      icon: Terminal
-    },
-    {
-      id: 3,
-      title: "Why External Team Access is Broken (And How to Fix It)",
-      excerpt: "External teams are essential for modern software development, but current access methods create massive security and operational challenges. Here's the path forward.",
-      content: `The rise of remote work, specialized consultants, and external development teams has created a perfect storm for production access challenges. Traditional IT policies weren't designed for this reality.
-
-## The Modern External Team Landscape
-
-**Statistics that Matter:**
-- 73% of companies work with external development teams
-- Average company works with 12+ external specialists annually
-- 89% of security incidents involve external access gone wrong
-- $4.45M average cost of a data breach involving third parties
-
-## Current "Solutions" and Why They Fail
-
-### 1. VPN + Shared Accounts
-**The Problem:** Creates a permanent backdoor into your infrastructure
-- No visibility into who's doing what
-- Shared passwords inevitably leak
-- Impossible to audit individual actions
-- VPN access = network access = potential lateral movement
-
-### 2. Creating Individual Accounts
-**The Problem:** Massive operational overhead
-- Provisioning takes days or weeks
-- Deprovisioning often forgotten
-- Account sprawl across multiple systems
-- Credential management nightmare
-
-### 3. Screen Sharing Sessions
-**The Problem:** Inefficient and limited
-- Can't work in parallel
-- No hands-on debugging capability
-- Session recordings are huge files
-- Doesn't scale beyond simple tasks
-
-## The EPHIMERA Approach
-
-**Principle 1: Ephemeral by Default**
-- Every access session has a built-in expiration
-- No permanent credentials ever created
-- Automatic cleanup prevents abandoned access
-
-**Principle 2: Granular Permissions**
-- Scope access to exactly what's needed
-- Database-level, table-level, even row-level permissions
-- Read-only vs read-write clearly defined
-- API endpoint access control
-
-**Principle 3: Complete Visibility**
-- Every action logged with context
-- Real-time monitoring and alerting
-- Export audit trails for compliance
-- Integration with existing SIEM systems
-
-**Principle 4: Zero Infrastructure Changes**
-- Works with existing cloud setups
-- No agents to install
-- API-driven integration
-- Backwards compatible with current tools
-
-## Implementation Roadmap
-
-**Week 1-2: Assessment**
-- Inventory current external access patterns
-- Identify highest-risk scenarios
-- Map compliance requirements
-
-**Week 3-4: Pilot Program**
-- Start with one external team
-- Configure EPHIMERA for specific use cases
-- Train internal and external teams
-
-**Month 2: Scale Rollout**
-- Expand to all external teams
-- Establish standardized procedures
-- Create self-service portals
-
-**Month 3+: Optimization**
-- Fine-tune permissions and policies
-- Integrate with existing workflows
-- Measure security and efficiency gains
-
-The future of external team access is ephemeral, secure, and auditable. The question isn't whether to make this transition, but how quickly you can implement it.`,
-      author: "DevOps Team",
-      date: "2024-12-10",
-      readTime: "6 min read",
-      category: "Strategy",
-      tags: ["External Teams", "DevOps", "Strategy"],
-      icon: Users
-    }
-  ]
 
   const categories = ["All", "Security", "Technical", "Strategy"]
   const [selectedCategory, setSelectedCategory] = useState("All")
@@ -449,19 +237,19 @@ The future of external team access is ephemeral, secure, and auditable. The ques
           <motion.div layout className="grid gap-8">
             <AnimatePresence>
               {filteredPosts.map((post, index) => (
-                <motion.article
-                  key={post.id}
-                  layout
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -30 }}
-                  transition={{ delay: index * 0.1 }}
-                  className={`backdrop-blur-xl rounded-3xl p-8 transition-all duration-300 group cursor-pointer ${
-                    isDarkMode
-                      ? 'bg-white/5 border border-white/10 hover:bg-white/8'
-                      : 'bg-white/70 border border-gray-200/60 hover:bg-white/90 shadow-[0_4px_20px_0_rgba(71,85,105,0.08)] hover:shadow-[0_8px_32px_0_rgba(71,85,105,0.12)]'
-                  }`}
-                >
+                <Link href={`/blog/${post.id}`} key={post.id}>
+                  <motion.article
+                    layout
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -30 }}
+                    transition={{ delay: index * 0.1 }}
+                    className={`backdrop-blur-xl rounded-3xl p-8 transition-all duration-300 group cursor-pointer ${
+                      isDarkMode
+                        ? 'bg-white/5 border border-white/10 hover:bg-white/8'
+                        : 'bg-white/70 border border-gray-200/60 hover:bg-white/90 shadow-[0_4px_20px_0_rgba(71,85,105,0.08)] hover:shadow-[0_8px_32px_0_rgba(71,85,105,0.12)]'
+                    }`}
+                  >
                   <div className="flex flex-col lg:flex-row gap-8">
                     {/* Article Icon */}
                     <div className={`w-16 h-16 rounded-2xl p-4 flex-shrink-0 ${
@@ -540,7 +328,8 @@ The future of external team access is ephemeral, secure, and auditable. The ques
                       </motion.div>
                     </div>
                   </div>
-                </motion.article>
+                  </motion.article>
+                </Link>
               ))}
             </AnimatePresence>
           </motion.div>
