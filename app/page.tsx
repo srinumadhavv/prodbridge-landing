@@ -1887,8 +1887,8 @@ export default function LandingPage() {
                       </div>
                       <div className="p-6">
                         <div className="grid grid-cols-2 gap-2">
-                          {/* AWS Services */}
-                          {selectedCloud === 'aws' && (
+                          {selectedCloud === 'aws' ? (
+                            /* AWS Services */
                             <>
                               <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
                                 <div className="w-6 h-6 flex items-center justify-center">
@@ -1897,73 +1897,71 @@ export default function LandingPage() {
                                 <span className="text-blue-600 text-sm hover:underline">AWS Amplify</span>
                               </div>
 
-                          <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
-                            <div className="w-6 h-6 flex items-center justify-center">
-                              <AWSManagementGovernanceCloudWatch width={24} height={24} />
-                            </div>
-                            <span className="text-blue-600 text-sm hover:underline">CloudWatch</span>
-                          </div>
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <AWSManagementGovernanceCloudWatch width={24} height={24} />
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">CloudWatch</span>
+                              </div>
 
-                          <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
-                            <div className="w-6 h-6 flex items-center justify-center">
-                              <AWSSecurityIdentityComplianceIdentityandAccessManagement width={24} height={24} />
-                            </div>
-                            <span className="text-blue-600 text-sm hover:underline">IAM</span>
-                          </div>
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <AWSSecurityIdentityComplianceIdentityandAccessManagement width={24} height={24} />
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">IAM</span>
+                              </div>
 
-                          <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
-                            <div className="w-6 h-6 flex items-center justify-center">
-                              <AWSComputeLambda width={24} height={24} />
-                            </div>
-                            <span className="text-blue-600 text-sm hover:underline">Lambda</span>
-                          </div>
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <AWSComputeLambda width={24} height={24} />
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">Lambda</span>
+                              </div>
 
-                          <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
-                            <div className="w-6 h-6 flex items-center justify-center">
-                              <AWSManagementGovernanceOrganizations width={24} height={24} />
-                            </div>
-                            <span className="text-blue-600 text-sm hover:underline">AWS Organizations</span>
-                          </div>
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <AWSManagementGovernanceOrganizations width={24} height={24} />
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">AWS Organizations</span>
+                              </div>
 
-                          <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
-                            <div className="w-6 h-6 flex items-center justify-center">
-                              <AWSAppIntegrationAPIGateway width={24} height={24} />
-                            </div>
-                            <span className="text-blue-600 text-sm hover:underline">API Gateway</span>
-                          </div>
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <AWSAppIntegrationAPIGateway width={24} height={24} />
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">API Gateway</span>
+                              </div>
 
-                          <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
-                            <div className="w-6 h-6 flex items-center justify-center">
-                              <AWSMediaServicesKinesisVideoStreams width={24} height={24} />
-                            </div>
-                            <span className="text-blue-600 text-sm hover:underline">Kinesis Video Streams</span>
-                          </div>
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <AWSMediaServicesKinesisVideoStreams width={24} height={24} />
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">Kinesis Video Streams</span>
+                              </div>
 
-                          <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
-                            <div className="w-6 h-6 flex items-center justify-center">
-                              <AWSStorageSimpleStorageService width={24} height={24} />
-                            </div>
-                            <span className="text-blue-600 text-sm hover:underline">S3</span>
-                          </div>
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <AWSStorageSimpleStorageService width={24} height={24} />
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">S3</span>
+                              </div>
 
-                          <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
-                            <div className="w-6 h-6 flex items-center justify-center">
-                              <AWSAppIntegrationAppSync width={24} height={24} />
-                            </div>
-                            <span className="text-blue-600 text-sm hover:underline">AWS AppSync</span>
-                          </div>
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <AWSAppIntegrationAppSync width={24} height={24} />
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">AWS AppSync</span>
+                              </div>
 
-                          <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
-                            <div className="w-6 h-6 flex items-center justify-center">
-                              <AWSDatabaseDynamoDB width={24} height={24} />
-                            </div>
-                            <span className="text-blue-600 text-sm hover:underline">DynamoDB</span>
-                          </div>
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <AWSDatabaseDynamoDB width={24} height={24} />
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">DynamoDB</span>
+                              </div>
                             </>
-                          )}
-
-                          {/* Azure Services */}
-                          {selectedCloud === 'azure' && (
+                          ) : selectedCloud === 'azure' ? (
+                            /* Azure Services */
                             <>
                               <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
                                 <div className="w-6 h-6 flex items-center justify-center">
@@ -2037,10 +2035,8 @@ export default function LandingPage() {
                                 <span className="text-blue-600 text-sm hover:underline">Cognitive Services</span>
                               </div>
                             </>
-                          )}
-
-                          {/* GCP Services */}
-                          {selectedCloud === 'gcp' && (
+                          ) : (
+                            /* GCP Services */
                             <>
                               <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
                                 <div className="w-6 h-6 flex items-center justify-center">
