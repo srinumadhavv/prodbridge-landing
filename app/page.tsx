@@ -55,6 +55,15 @@ import {
   AWSDatabaseDynamoDB
 } from 'yadl-aws-icons'
 
+// Azure Icons from azure-react-icons package
+import {
+  AzVirtualMachine,
+  AzAppService,
+  AzStorage,
+  AzSQLDatabase,
+  CosmosDBcolor
+} from 'azure-react-icons'
+
 export default function LandingPage() {
   // Light mode hover effects added
   const [email, setEmail] = useState('')
@@ -62,14 +71,20 @@ export default function LandingPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [emailError, setEmailError] = useState('')
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [activeTab, setActiveTab] = useState('overview')
-  const [selectedCloud, setSelectedCloud] = useState('aws')
+  // activeTab and setActiveTab removed as unused
+  const [selectedCloud, setSelectedCloud] = useState<'aws' | 'azure' | 'gcp'>('aws')
   const [isDarkMode, setIsDarkMode] = useState(true)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [selectedRole, setSelectedRole] = useState('ReadOnlyAccess')
   const [isTracking, setIsTracking] = useState(true)
   const [isPiiMasked, setIsPiiMasked] = useState(true)
   const [currentUrl, setCurrentUrl] = useState('console.aws.amazon.com')
+
+  const cloudUrls = {
+    aws: 'console.aws.amazon.com',
+    azure: 'portal.azure.com',
+    gcp: 'console.cloud.google.com'
+  }
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -623,15 +638,15 @@ export default function LandingPage() {
               Without the{" "}
               <span className={`relative inline-block ${
                 isDarkMode
-                  ? 'bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent'
-                  : 'bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent'
+                  ? 'bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent'
+                  : 'bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent'
               }`}>
                 Risk
                 <motion.div
                   className={`absolute -bottom-2 left-0 h-1 bg-gradient-to-r ${
                     isDarkMode
-                      ? 'from-yellow-400 to-orange-400'
-                      : 'from-yellow-500 to-orange-500'
+                      ? 'from-red-400 to-orange-400'
+                      : 'from-red-500 to-orange-500'
                   } rounded-full`}
                   initial={{ width: 0 }}
                   animate={{ width: '100%' }}
@@ -1090,10 +1105,70 @@ export default function LandingPage() {
             </p>
           </motion.div>
 
-          {/* AWS Browser Interface */}
+          {/* Cloud Provider Tabs */}
+          <div className="flex justify-center mb-6">
+            <div className={`inline-flex rounded-lg p-1 transition-all duration-300 ${
+              isDarkMode ? 'bg-gray-800/50 border border-gray-700' : 'bg-gray-100 border border-gray-300'
+            }`}>
+              <button
+                onClick={() => {
+                  setSelectedCloud('aws')
+                  setCurrentUrl(cloudUrls.aws)
+                }}
+                className={`px-6 py-2 rounded-md font-medium transition-all duration-200 ${
+                  selectedCloud === 'aws'
+                    ? isDarkMode
+                      ? 'bg-orange-500/20 text-orange-400 border border-orange-500/50'
+                      : 'bg-orange-100 text-orange-700 border border-orange-300'
+                    : isDarkMode
+                      ? 'text-gray-400 hover:text-gray-200'
+                      : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                AWS
+              </button>
+              <button
+                onClick={() => {
+                  setSelectedCloud('azure')
+                  setCurrentUrl(cloudUrls.azure)
+                }}
+                className={`px-6 py-2 rounded-md font-medium transition-all duration-200 ${
+                  selectedCloud === 'azure'
+                    ? isDarkMode
+                      ? 'bg-blue-500/20 text-blue-400 border border-blue-500/50'
+                      : 'bg-blue-100 text-blue-700 border border-blue-300'
+                    : isDarkMode
+                      ? 'text-gray-400 hover:text-gray-200'
+                      : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                Azure
+              </button>
+              <button
+                onClick={() => {
+                  setSelectedCloud('gcp')
+                  setCurrentUrl(cloudUrls.gcp)
+                }}
+                className={`px-6 py-2 rounded-md font-medium transition-all duration-200 ${
+                  selectedCloud === 'gcp'
+                    ? isDarkMode
+                      ? 'bg-green-500/20 text-green-400 border border-green-500/50'
+                      : 'bg-green-100 text-green-700 border border-green-300'
+                    : isDarkMode
+                      ? 'text-gray-400 hover:text-gray-200'
+                      : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                GCP
+              </button>
+            </div>
+          </div>
+
+          {/* Cloud Console Browser Interface */}
           <motion.div
+            key={selectedCloud}
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className={`backdrop-blur-xl rounded-2xl overflow-hidden transition-all duration-500 ${
               isDarkMode
@@ -1111,7 +1186,7 @@ export default function LandingPage() {
                 {/* Left side - Window controls and navigation */}
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                    <div className="w-3 h-3 rounded-full bg-red-500" />
                     <div className="w-3 h-3 rounded-full bg-yellow-500" />
                     <div className="w-3 h-3 rounded-full bg-green-500" />
                   </div>
@@ -1212,7 +1287,11 @@ export default function LandingPage() {
 
                 <div className="flex items-center space-x-2 text-sm text-gray-400">
                   <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                  <span>AWS Session Active</span>
+                  <span>
+                    {selectedCloud === 'aws' && 'AWS Session Active'}
+                    {selectedCloud === 'azure' && 'Azure Portal Active'}
+                    {selectedCloud === 'gcp' && 'GCP Console Active'}
+                  </span>
                 </div>
               </div>
             </div>
@@ -1221,25 +1300,51 @@ export default function LandingPage() {
             <div className="h-[600px] flex flex-col">
               {/* AWS Console Simulation */}
               <div className="flex-1 bg-gray-50">
-                {/* AWS Console Navigation Bar */}
-                <div className="bg-black text-white px-4 py-2 flex items-center justify-between">
+                {/* Console Navigation Bar */}
+                <div className={`px-4 py-2 flex items-center justify-between ${
+                  selectedCloud === 'aws' ? 'bg-black text-white' :
+                  selectedCloud === 'azure' ? 'bg-[#0078d4] text-white' :
+                  'bg-[#4285f4] text-white'
+                }`}>
                   <div className="flex items-center space-x-4">
-                    {/* AWS Logo */}
+                    {/* Cloud Logo */}
                     <div className="flex items-center space-x-3">
                       <div className="flex items-center">
-                        <img
-                          src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
-                          alt="AWS"
-                          className="h-6 w-auto"
-                        />
+                        {selectedCloud === 'aws' && (
+                          <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
+                            alt="AWS"
+                            className="h-6 w-auto"
+                          />
+                        )}
+                        {selectedCloud === 'azure' && (
+                          <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Microsoft_Azure.svg/150px-Microsoft_Azure.svg.png"
+                            alt="Microsoft Azure"
+                            className="h-6 w-auto"
+                          />
+                        )}
+                        {selectedCloud === 'gcp' && (
+                          <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Google_Cloud_logo.svg/512px-Google_Cloud_logo.svg.png"
+                            alt="Google Cloud"
+                            className="h-6 w-auto"
+                          />
+                        )}
                       </div>
-                      <span className="text-sm font-medium">Management Console</span>
+                      <span className="text-sm font-medium">
+                        {selectedCloud === 'aws' && 'Management Console'}
+                        {selectedCloud === 'azure' && 'Microsoft Azure'}
+                        {selectedCloud === 'gcp' && 'Google Cloud Console'}
+                      </span>
                     </div>
 
                     {/* Services Menu */}
                     <div className="flex items-center space-x-1">
                       <button className="px-3 py-1 text-sm text-gray-300 hover:text-white hover:bg-gray-700 rounded">
-                        Services
+                        {selectedCloud === 'aws' && 'Services'}
+                        {selectedCloud === 'azure' && 'All services'}
+                        {selectedCloud === 'gcp' && 'Products & solutions'}
                       </button>
                       <ChevronDown className="w-4 h-4 text-gray-400" />
                     </div>
@@ -1248,41 +1353,522 @@ export default function LandingPage() {
                   <div className="flex items-center space-x-4">
                     {/* Region Selector */}
                     <div className="flex items-center space-x-1 text-sm text-gray-300">
-                      <span>US East (N. Virginia)</span>
+                      <span>
+                        {selectedCloud === 'aws' && 'US East (N. Virginia)'}
+                        {selectedCloud === 'azure' && 'East US'}
+                        {selectedCloud === 'gcp' && 'us-central1'}
+                      </span>
                       <ChevronDown className="w-4 h-4" />
                     </div>
 
                     {/* User Menu */}
                     <div className="flex items-center space-x-1 text-sm text-gray-300">
-                      <span>external-contractor@</span>
+                      <span>
+                        {selectedCloud === 'aws' && 'external-contractor@'}
+                        {selectedCloud === 'azure' && 'contractor@company.com'}
+                        {selectedCloud === 'gcp' && 'contractor@project.iam'}
+                      </span>
                       <ChevronDown className="w-4 h-4" />
                     </div>
                   </div>
                 </div>
 
-                {/* AWS Console Header */}
-                <div className="bg-white border-b border-gray-200">
-                  <div className="px-6 py-4">
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center space-x-4">
-                        <h1 className="text-2xl font-medium text-gray-900">Console Home</h1>
-                        <div className="text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded">Info</div>
-                      </div>
-                      <div className="flex items-center space-x-4">
-                        <button className="text-sm text-blue-600 bg-blue-100 px-3 py-1 rounded hover:bg-blue-200">
-                          Reset to default layout
-                        </button>
-                        <button className="text-white bg-[#FF9900] px-3 py-1 rounded text-sm hover:bg-[#E88B00]">
-                          + Add widgets
-                        </button>
+                {/* Console Header */}
+                {selectedCloud === 'azure' ? (
+                  // Azure Portal Header - No header needed, services start immediately
+                  <></>
+                ) : (
+                  // AWS/GCP Console Header
+                  <div className="bg-white border-b border-gray-200">
+                    <div className="px-6 py-4">
+                      <div className="flex justify-between items-center">
+                        <div className="flex items-center space-x-4">
+                          <h1 className="text-2xl font-medium text-gray-900">
+                            {selectedCloud === 'aws' && 'Console Home'}
+                            {selectedCloud === 'gcp' && 'Google Cloud Console'}
+                          </h1>
+                          <div className="text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded">Info</div>
+                        </div>
+                        <div className="flex items-center space-x-4">
+                          <button className="text-sm text-blue-600 bg-blue-100 px-3 py-1 rounded hover:bg-blue-200">
+                            Reset to default layout
+                          </button>
+                          <button className="text-white bg-[#FF9900] px-3 py-1 rounded text-sm hover:bg-[#E88B00]">
+                            + Add widgets
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
 
-                {/* AWS Console Content Area */}
-                <div className="flex-1 bg-gray-50 px-6 py-4">
-                  <div className="grid grid-cols-2 gap-6 mb-6">
+                {/* Console Content Area */}
+                {selectedCloud === 'azure' ? (
+                  // Azure Portal Layout
+                  <div className="flex-1 bg-white px-6 py-6">
+                    {/* Azure services section */}
+                    <div className="mb-8">
+                      <h2 className="text-lg font-medium text-gray-900 mb-6">Azure services</h2>
+                      <div className="flex items-center justify-center space-x-8 mb-8">
+                        <div className="text-center">
+                          <div className="w-16 h-16 mx-auto mb-3 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <span className="text-blue-600 text-2xl">+</span>
+                          </div>
+                          <span className="text-sm text-blue-600 hover:underline cursor-pointer">Create a resource</span>
+                        </div>
+                        <div className="text-center">
+                          <div className="w-16 h-16 mx-auto mb-3 bg-orange-100 rounded-lg flex items-center justify-center">
+                            <span className="text-orange-600 text-xl">📋</span>
+                          </div>
+                          <span className="text-sm text-blue-600 hover:underline cursor-pointer">Subscriptions</span>
+                        </div>
+                        <div className="text-center">
+                          <div className="w-16 h-16 mx-auto mb-3 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <AzVirtualMachine size={32} />
+                          </div>
+                          <span className="text-sm text-blue-600 hover:underline cursor-pointer">Virtual machines</span>
+                        </div>
+                        <div className="text-center">
+                          <div className="w-16 h-16 mx-auto mb-3 bg-cyan-100 rounded-lg flex items-center justify-center">
+                            <AzAppService size={32} />
+                          </div>
+                          <span className="text-sm text-blue-600 hover:underline cursor-pointer">App Services</span>
+                        </div>
+                        <div className="text-center">
+                          <div className="w-16 h-16 mx-auto mb-3 bg-teal-100 rounded-lg flex items-center justify-center">
+                            <AzStorage size={32} />
+                          </div>
+                          <span className="text-sm text-blue-600 hover:underline cursor-pointer">Storage accounts</span>
+                        </div>
+                        <div className="text-center">
+                          <div className="w-16 h-16 mx-auto mb-3 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <AzSQLDatabase size={32} />
+                          </div>
+                          <span className="text-sm text-blue-600 hover:underline cursor-pointer">SQL databases</span>
+                        </div>
+                        <div className="text-center">
+                          <div className="w-16 h-16 mx-auto mb-3 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <AzSQLDatabase size={32} />
+                          </div>
+                          <span className="text-sm text-blue-600 hover:underline cursor-pointer">Azure Database for PostgreSQL</span>
+                        </div>
+                        <div className="text-center">
+                          <div className="w-16 h-16 mx-auto mb-3 bg-cyan-100 rounded-lg flex items-center justify-center">
+                            <CosmosDBcolor size={32} />
+                          </div>
+                          <span className="text-sm text-blue-600 hover:underline cursor-pointer">Azure Cosmos DB</span>
+                        </div>
+                        <div className="text-center">
+                          <div className="w-16 h-16 mx-auto mb-3 bg-purple-100 rounded-lg flex items-center justify-center">
+                            <Layers width={32} height={32} className="text-blue-600" />
+                          </div>
+                          <span className="text-sm text-blue-600 hover:underline cursor-pointer">Kubernetes services</span>
+                        </div>
+                        <div className="text-center">
+                          <div className="w-16 h-16 mx-auto mb-3 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <span className="text-blue-600 text-xl">→</span>
+                          </div>
+                          <span className="text-sm text-blue-600 hover:underline cursor-pointer">More services</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Recent resources section */}
+                    <div className="mb-8">
+                      <div className="flex justify-between items-center mb-4">
+                        <h2 className="text-lg font-medium text-gray-900">Recent resources</h2>
+                        <div className="flex space-x-2">
+                          <span className="text-sm text-gray-600">Name</span>
+                          <span className="text-sm text-gray-600">Type</span>
+                          <span className="text-sm text-gray-600">Last Viewed</span>
+                        </div>
+                      </div>
+                      <div className="bg-gray-50 border border-gray-200 rounded-lg">
+                        <div className="flex items-center space-x-4 p-4 border-b border-gray-200">
+                          <span className="text-orange-500 text-lg">📋</span>
+                          <span className="text-blue-600 hover:underline cursor-pointer text-sm">Azure subscription 1</span>
+                          <span className="text-sm text-gray-600 ml-auto">Subscription</span>
+                          <span className="text-sm text-gray-600">7 minutes ago</span>
+                        </div>
+                        <div className="flex items-center space-x-4 p-4">
+                          <span className="text-purple-500 text-lg">🔍</span>
+                          <span className="text-blue-600 hover:underline cursor-pointer text-sm">chiseiai8040666874</span>
+                          <span className="text-sm text-gray-600 ml-auto">Application Insights</span>
+                          <span className="text-sm text-gray-600">4 days ago</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Navigate and Tools sections */}
+                    <div className="grid grid-cols-2 gap-8">
+                      {/* Navigate */}
+                      <div>
+                        <h2 className="text-lg font-medium text-gray-900 mb-4">Navigate</h2>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded cursor-pointer">
+                            <span className="text-orange-500 text-lg">📋</span>
+                            <span className="text-sm text-blue-600 hover:underline">Subscriptions</span>
+                          </div>
+                          <div className="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded cursor-pointer">
+                            <span className="text-cyan-500 text-lg">📦</span>
+                            <span className="text-sm text-blue-600 hover:underline">Resource groups</span>
+                          </div>
+                          <div className="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded cursor-pointer">
+                            <span className="text-green-500 text-lg">🔳</span>
+                            <span className="text-sm text-blue-600 hover:underline">All resources</span>
+                          </div>
+                          <div className="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded cursor-pointer">
+                            <span className="text-blue-500 text-lg">📊</span>
+                            <span className="text-sm text-blue-600 hover:underline">Dashboard</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Tools */}
+                      <div>
+                        <h2 className="text-lg font-medium text-gray-900 mb-4">Tools</h2>
+                        <div className="space-y-4">
+                          <div className="flex items-start space-x-3 p-3 hover:bg-gray-50 rounded cursor-pointer">
+                            <span className="text-orange-500 text-lg">🏠</span>
+                            <div>
+                              <h4 className="text-sm text-blue-600 hover:underline font-medium">Microsoft Learn ↗</h4>
+                              <p className="text-xs text-gray-600">Learn Azure with free online training from Microsoft</p>
+                            </div>
+                          </div>
+                          <div className="flex items-start space-x-3 p-3 hover:bg-gray-50 rounded cursor-pointer">
+                            <span className="text-cyan-500 text-lg">📊</span>
+                            <div>
+                              <h4 className="text-sm text-blue-600 hover:underline font-medium">Azure Monitor</h4>
+                              <p className="text-xs text-gray-600">Monitor your apps and infrastructure</p>
+                            </div>
+                          </div>
+                          <div className="flex items-start space-x-3 p-3 hover:bg-gray-50 rounded cursor-pointer">
+                            <span className="text-green-500 text-lg">🛡️</span>
+                            <div>
+                              <h4 className="text-sm text-blue-600 hover:underline font-medium">Security Center</h4>
+                              <p className="text-xs text-gray-600">Secure your apps and infrastructure</p>
+                            </div>
+                          </div>
+                          <div className="flex items-start space-x-3 p-3 hover:bg-gray-50 rounded cursor-pointer">
+                            <span className="text-green-500 text-lg">💰</span>
+                            <div>
+                              <h4 className="text-sm text-blue-600 hover:underline font-medium">Cost Management</h4>
+                              <p className="text-xs text-gray-600">Analyze and optimize your cloud spend for free</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Useful links and Azure mobile app */}
+                    <div className="grid grid-cols-3 gap-8 mt-8 pt-8 border-t border-gray-200">
+                      <div>
+                        <h3 className="text-sm font-medium text-gray-900 mb-3">Useful links</h3>
+                        <div className="space-y-2">
+                          <div className="text-sm text-blue-600 hover:underline cursor-pointer">Technical Documentation ↗</div>
+                          <div className="text-sm text-blue-600 hover:underline cursor-pointer">Azure Migration Tools</div>
+                        </div>
+                      </div>
+                      <div>
+                        <div className="space-y-2">
+                          <div className="text-sm text-blue-600 hover:underline cursor-pointer">Azure Services ↗</div>
+                          <div className="text-sm text-blue-600 hover:underline cursor-pointer">Find an Azure expert</div>
+                        </div>
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-medium text-gray-900 mb-3">Azure mobile app</h3>
+                        <div className="flex space-x-2">
+                          <div className="w-24 h-8 bg-black rounded flex items-center justify-center">
+                            <span className="text-white text-xs">App Store</span>
+                          </div>
+                          <div className="w-24 h-8 bg-black rounded flex items-center justify-center">
+                            <span className="text-white text-xs">Google Play</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : selectedCloud === 'gcp' ? (
+                  // Google Cloud Console Layout
+                  <div className="flex-1 bg-gray-50 px-6 py-6">
+                    {/* Main Dashboard Grid */}
+                    <div className="grid grid-cols-4 gap-6">
+                      {/* Left Column - Project info, Resources, Trace */}
+                      <div className="space-y-6">
+                        {/* Project info */}
+                        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+                          <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
+                            <div className="flex items-center space-x-2">
+                              <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center">
+                                <span className="text-blue-600 text-sm">📊</span>
+                              </div>
+                              <h3 className="text-sm font-medium text-gray-900">Project info</h3>
+                            </div>
+                            <button className="text-gray-400 hover:text-gray-600">⋯</button>
+                          </div>
+                          <div className="p-4 space-y-3">
+                            <div>
+                              <div className="text-xs text-gray-600">Project name</div>
+                              <div className="text-sm font-medium text-gray-900">K21DemoProject</div>
+                            </div>
+                            <div>
+                              <div className="text-xs text-gray-600">Project ID</div>
+                              <div className="text-sm text-gray-700">k21demoproject</div>
+                            </div>
+                            <div>
+                              <div className="text-xs text-gray-600">Project number</div>
+                              <div className="text-sm text-gray-700">433444790213</div>
+                            </div>
+                            <div className="pt-2 border-t border-gray-100">
+                              <button className="text-xs text-blue-600 hover:underline uppercase tracking-wide">
+                                ADD PEOPLE TO THIS PROJECT
+                              </button>
+                            </div>
+                            <div className="flex items-center text-sm text-gray-600">
+                              <span className="text-gray-400 mr-2">→</span>
+                              <span>Go to project settings</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Resources */}
+                        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+                          <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
+                            <div className="flex items-center space-x-2">
+                              <div className="w-6 h-6 rounded-full bg-orange-100 flex items-center justify-center">
+                                <span className="text-orange-600 text-sm">📦</span>
+                              </div>
+                              <h3 className="text-sm font-medium text-gray-900">Resources</h3>
+                            </div>
+                            <button className="text-gray-400 hover:text-gray-600">⋯</button>
+                          </div>
+                          <div className="p-4">
+                            <div className="flex items-center space-x-2 mb-2">
+                              <span className="text-sm text-gray-600">📂 Storage</span>
+                            </div>
+                            <div className="text-sm text-gray-700">1 bucket</div>
+                          </div>
+                        </div>
+
+                        {/* Trace */}
+                        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+                          <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
+                            <div className="flex items-center space-x-2">
+                              <div className="w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center">
+                                <span className="text-purple-600 text-sm">🔍</span>
+                              </div>
+                              <h3 className="text-sm font-medium text-gray-900">Trace</h3>
+                            </div>
+                            <button className="text-gray-400 hover:text-gray-600">⋯</button>
+                          </div>
+                          <div className="p-4">
+                            <div className="text-sm text-gray-600 text-center py-4">
+                              No trace data from the past 7 days
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Center Column - Quick Access, API APIs */}
+                      <div className="space-y-6">
+                        {/* Quick Access */}
+                        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+                          <div className="px-4 py-3 border-b border-gray-200">
+                            <h3 className="text-sm font-medium text-gray-900">Quick Access</h3>
+                          </div>
+                          <div className="p-4 space-y-4">
+                            {/* Quick access items */}
+                            <div className="space-y-3">
+                              <div className="flex items-center space-x-3 text-sm">
+                                <div className="w-6 h-6 bg-blue-500 rounded flex items-center justify-center">
+                                  <span className="text-white text-xs">K21</span>
+                                </div>
+                                <div>
+                                  <div className="font-medium text-gray-900">K21DemoProject</div>
+                                  <div className="text-xs text-gray-600">Accessed 3 days ago</div>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center space-x-3 text-sm">
+                                <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center">
+                                  <span className="text-white text-xs">CE</span>
+                                </div>
+                                <div>
+                                  <div className="font-medium text-gray-900">Compute Engine Instances</div>
+                                  <div className="text-xs text-gray-600">Accessed 3 days ago</div>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center space-x-3 text-sm">
+                                <div className="w-6 h-6 bg-orange-600 rounded flex items-center justify-center">
+                                  <span className="text-white text-xs">K8s</span>
+                                </div>
+                                <div>
+                                  <div className="font-medium text-gray-900">Kubernetes clusters – Kubernetes En...</div>
+                                  <div className="text-xs text-gray-600">Accessed 3 days ago</div>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center space-x-3 text-sm">
+                                <div className="w-6 h-6 bg-green-600 rounded flex items-center justify-center">
+                                  <span className="text-white text-xs">CE</span>
+                                </div>
+                                <div>
+                                  <div className="font-medium text-gray-900">Create a Compute Engine Instance</div>
+                                  <div className="text-xs text-gray-600">Accessed 10 days ago</div>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center space-x-3 text-sm">
+                                <div className="w-6 h-6 bg-purple-600 rounded flex items-center justify-center">
+                                  <span className="text-white text-xs">$</span>
+                                </div>
+                                <div>
+                                  <div className="font-medium text-gray-900">Billing accounts – Billing – K21DemoP...</div>
+                                  <div className="text-xs text-gray-600">Accessed 1 hour ago</div>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center space-x-3 text-sm">
+                                <div className="w-6 h-6 bg-blue-400 rounded flex items-center justify-center">
+                                  <span className="text-white text-xs">λ</span>
+                                </div>
+                                <div>
+                                  <div className="font-medium text-gray-900">Cloud Functions</div>
+                                  <div className="text-xs text-gray-600">Accessed...</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* API APIs */}
+                        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+                          <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
+                            <div className="flex items-center space-x-2">
+                              <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
+                                <span className="text-green-600 text-sm">🔌</span>
+                              </div>
+                              <h3 className="text-sm font-medium text-gray-900">🛡️ APIs</h3>
+                            </div>
+                            <button className="text-gray-400 hover:text-gray-600">⋯</button>
+                          </div>
+                          <div className="p-4">
+                            <div className="mb-3">
+                              <div className="text-xs text-gray-600 mb-1">Requests (requests/sec)</div>
+                              <div className="h-20 bg-gray-50 rounded border flex items-center justify-center relative">
+                                {/* Simple graph representation */}
+                                <svg className="w-full h-full" viewBox="0 0 300 80">
+                                  <polyline
+                                    points="20,60 60,45 100,50 140,40 180,45 220,35 260,40"
+                                    fill="none"
+                                    stroke="#4285f4"
+                                    strokeWidth="2"
+                                  />
+                                  <circle cx="260" cy="40" r="3" fill="#4285f4" />
+                                </svg>
+                                <div className="absolute bottom-2 left-2 text-xs text-gray-500">2:45</div>
+                                <div className="absolute bottom-2 right-2 text-xs text-gray-500">3:30</div>
+                              </div>
+                            </div>
+                            <div className="flex items-center space-x-2 text-sm">
+                              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                              <span className="text-gray-600">Requests: 0.033/s</span>
+                            </div>
+                            <div className="mt-3 pt-3 border-t border-gray-100">
+                              <div className="flex items-center text-sm text-gray-600">
+                                <span className="text-gray-400 mr-2">→</span>
+                                <span>Go to APIs overview</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Right Columns - Cloud Platform status, Billing, Monitoring */}
+                      <div className="col-span-2 space-y-6">
+                        <div className="grid grid-cols-2 gap-6">
+                          {/* Google Cloud Platform status */}
+                          <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+                            <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
+                              <div className="flex items-center space-x-2">
+                                <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center">
+                                  <span className="text-green-600 text-sm">✓</span>
+                                </div>
+                                <h3 className="text-sm font-medium text-gray-900">Google Cloud Platform status</h3>
+                              </div>
+                              <button className="text-gray-400 hover:text-gray-600">⋯</button>
+                            </div>
+                            <div className="p-4">
+                              <div className="flex items-center space-x-2 mb-3">
+                                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                <span className="text-sm text-gray-900">All services normal</span>
+                              </div>
+                              <div className="flex items-center text-sm text-gray-600">
+                                <span className="text-gray-400 mr-2">→</span>
+                                <span>Go to Cloud status dashboard</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Billing */}
+                          <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+                            <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
+                              <div className="flex items-center space-x-2">
+                                <div className="w-6 h-6 rounded-full bg-yellow-100 flex items-center justify-center">
+                                  <span className="text-yellow-600 text-sm">💰</span>
+                                </div>
+                                <h3 className="text-sm font-medium text-gray-900">Billing</h3>
+                              </div>
+                              <button className="text-gray-400 hover:text-gray-600">⋯</button>
+                            </div>
+                            <div className="p-4">
+                              <div className="mb-3">
+                                <div className="text-sm text-gray-600 mb-1">Estimated charges</div>
+                                <div className="text-2xl font-bold text-gray-900">₹0.00</div>
+                                <div className="text-xs text-gray-600">For the billing period Mar 1 – 10, 2021</div>
+                              </div>
+                              <div className="pt-3 border-t border-gray-100 space-y-2">
+                                <div className="flex items-center text-sm text-blue-600">
+                                  <span className="text-gray-400 mr-2">→</span>
+                                  <span>Take a tour of billing</span>
+                                </div>
+                                <div className="flex items-center text-sm text-gray-600">
+                                  <span className="text-gray-400 mr-2">→</span>
+                                  <span>View detailed charges</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Monitoring */}
+                        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+                          <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
+                            <div className="flex items-center space-x-2">
+                              <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center">
+                                <span className="text-blue-600 text-sm">📊</span>
+                              </div>
+                              <h3 className="text-sm font-medium text-gray-900">Monitoring</h3>
+                            </div>
+                            <button className="text-gray-400 hover:text-gray-600">⋯</button>
+                          </div>
+                          <div className="p-4 space-y-4">
+                            <div>
+                              <div className="text-sm text-gray-900 mb-2">Set up alerting policies</div>
+                            </div>
+                            <div>
+                              <div className="text-sm text-gray-900">Create uptime checks</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  // AWS Console Content Area
+                  <div className="flex-1 bg-gray-50 px-6 py-4">
+                    <div className="grid grid-cols-2 gap-6 mb-6">
                     {/* Recently visited */}
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
@@ -1301,12 +1887,15 @@ export default function LandingPage() {
                       </div>
                       <div className="p-6">
                         <div className="grid grid-cols-2 gap-2">
-                          <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
-                            <div className="w-6 h-6 flex items-center justify-center">
-                              <AWSFrontEndWebMobileAmplify width={24} height={24} />
-                            </div>
-                            <span className="text-blue-600 text-sm hover:underline">AWS Amplify</span>
-                          </div>
+                          {/* AWS Services */}
+                          {selectedCloud === 'aws' && (
+                            <>
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <AWSFrontEndWebMobileAmplify width={24} height={24} style={{filter: 'hue-rotate(40deg) saturate(1.2)'}} />
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">AWS Amplify</span>
+                              </div>
 
                           <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
                             <div className="w-6 h-6 flex items-center justify-center">
@@ -1370,6 +1959,162 @@ export default function LandingPage() {
                             </div>
                             <span className="text-blue-600 text-sm hover:underline">DynamoDB</span>
                           </div>
+                            </>
+                          )}
+
+                          {/* Azure Services */}
+                          {selectedCloud === 'azure' && (
+                            <>
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <div className="w-6 h-6 bg-blue-600 rounded-sm flex items-center justify-center">
+                                    <span className="text-white text-xs font-bold">VM</span>
+                                  </div>
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">Virtual Machines</span>
+                              </div>
+
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <div className="w-6 h-6 bg-blue-600 rounded-sm flex items-center justify-center">
+                                    <span className="text-white text-xs font-bold">AD</span>
+                                  </div>
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">Active Directory</span>
+                              </div>
+
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <div className="w-6 h-6 bg-blue-600 rounded-sm flex items-center justify-center">
+                                    <span className="text-white text-xs font-bold">DB</span>
+                                  </div>
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">SQL Database</span>
+                              </div>
+
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <div className="w-6 h-6 bg-blue-600 rounded-sm flex items-center justify-center">
+                                    <span className="text-white text-xs font-bold">KV</span>
+                                  </div>
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">Key Vault</span>
+                              </div>
+
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <div className="w-6 h-6 bg-blue-600 rounded-sm flex items-center justify-center">
+                                    <span className="text-white text-xs font-bold">AS</span>
+                                  </div>
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">App Service</span>
+                              </div>
+
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <div className="w-6 h-6 bg-blue-600 rounded-sm flex items-center justify-center">
+                                    <span className="text-white text-xs font-bold">ST</span>
+                                  </div>
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">Storage Account</span>
+                              </div>
+
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <div className="w-6 h-6 bg-blue-600 rounded-sm flex items-center justify-center">
+                                    <span className="text-white text-xs font-bold">FN</span>
+                                  </div>
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">Functions</span>
+                              </div>
+
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <div className="w-6 h-6 bg-blue-600 rounded-sm flex items-center justify-center">
+                                    <span className="text-white text-xs font-bold">AI</span>
+                                  </div>
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">Cognitive Services</span>
+                              </div>
+                            </>
+                          )}
+
+                          {/* GCP Services */}
+                          {selectedCloud === 'gcp' && (
+                            <>
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <div className="w-6 h-6 bg-blue-500 rounded-sm flex items-center justify-center">
+                                    <span className="text-white text-xs font-bold">CE</span>
+                                  </div>
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">Compute Engine</span>
+                              </div>
+
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <div className="w-6 h-6 bg-green-600 rounded-sm flex items-center justify-center">
+                                    <span className="text-white text-xs font-bold">CS</span>
+                                  </div>
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">Cloud Storage</span>
+                              </div>
+
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <div className="w-6 h-6 bg-red-500 rounded-sm flex items-center justify-center">
+                                    <span className="text-white text-xs font-bold">BQ</span>
+                                  </div>
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">BigQuery</span>
+                              </div>
+
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <div className="w-6 h-6 bg-blue-500 rounded-sm flex items-center justify-center">
+                                    <span className="text-white text-xs font-bold">GKE</span>
+                                  </div>
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">Kubernetes Engine</span>
+                              </div>
+
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <div className="w-6 h-6 bg-yellow-600 rounded-sm flex items-center justify-center">
+                                    <span className="text-white text-xs font-bold">CF</span>
+                                  </div>
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">Cloud Functions</span>
+                              </div>
+
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <div className="w-6 h-6 bg-purple-600 rounded-sm flex items-center justify-center">
+                                    <span className="text-white text-xs font-bold">CR</span>
+                                  </div>
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">Cloud Run</span>
+                              </div>
+
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <div className="w-6 h-6 bg-green-500 rounded-sm flex items-center justify-center">
+                                    <span className="text-white text-xs font-bold">PM</span>
+                                  </div>
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">Pub/Sub</span>
+                              </div>
+
+                              <div className="service-item flex items-center space-x-3 p-2 hover:bg-gray-50 rounded cursor-pointer">
+                                <div className="w-6 h-6 flex items-center justify-center">
+                                  <div className="w-6 h-6 bg-red-600 rounded-sm flex items-center justify-center">
+                                    <span className="text-white text-xs font-bold">IAM</span>
+                                  </div>
+                                </div>
+                                <span className="text-blue-600 text-sm hover:underline">IAM & Admin</span>
+                              </div>
+                            </>
+                          )}
                         </div>
                         <div className="mt-4 text-center">
                           <button className="text-blue-600 text-sm hover:underline">View all services</button>
@@ -1555,9 +2300,9 @@ export default function LandingPage() {
                         </div>
                       </div>
                     </motion.div>
+                    </div>
                   </div>
-                </div>
-
+                )}
               </div>
             </div>
           </motion.div>
@@ -1641,8 +2386,8 @@ export default function LandingPage() {
               External Team Access is{" "}
               <span className={`bg-gradient-to-r bg-clip-text text-transparent ${
                 isDarkMode
-                  ? 'from-yellow-400 via-orange-400 to-yellow-200'
-                  : 'from-yellow-600 via-orange-600 to-yellow-400'
+                  ? 'from-red-400 via-orange-400 to-red-200'
+                  : 'from-red-600 via-orange-600 to-red-400'
               }`}>
                 Broken Today
               </span>
@@ -1668,7 +2413,7 @@ export default function LandingPage() {
               }`}
             >
               <div className="flex items-center mb-6">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-500 to-orange-600 p-3 mr-4">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500 to-orange-600 p-3 mr-4">
                   <AlertCircle className="w-6 h-6 text-white" />
                 </div>
                 <h3 className={`text-xl font-bold transition-colors duration-300 ${
@@ -1960,8 +2705,9 @@ export default function LandingPage() {
 
             {/* Made in India with love */}
             <div className="flex items-center space-x-1 mb-4 md:mb-0">
-              <span className="text-sm text-gray-400">Made in India with</span>
+              <span className="text-sm text-gray-400">Made with</span>
               <span className="text-red-500 text-lg">♥</span>
+              <span className="text-sm text-gray-400">in India</span>
             </div>
 
             <div className="flex items-center space-x-6">
