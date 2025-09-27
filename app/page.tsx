@@ -40,6 +40,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import FAQSchema from '@/components/FAQSchema'
 
 // AWS Icons
 import {
@@ -220,11 +221,13 @@ export default function LandingPage() {
   ]
 
   return (
-    <div className={`min-h-screen overflow-hidden relative transition-colors duration-500 ${
-      isDarkMode
-        ? 'bg-black text-white'
-        : 'bg-gradient-to-br from-gray-50 via-slate-50/80 to-gray-100/60 text-slate-900'
-    }`}>
+    <>
+      <FAQSchema faqs={faqs} />
+      <div className={`min-h-screen overflow-hidden relative transition-colors duration-500 ${
+        isDarkMode
+          ? 'bg-black text-white'
+          : 'bg-gradient-to-br from-gray-50 via-slate-50/80 to-gray-100/60 text-slate-900'
+      }`}>
       {/* Animated Background */}
       <div className="fixed inset-0 z-0">
         {/* Base Layer */}
@@ -658,13 +661,13 @@ export default function LandingPage() {
             <p className={`text-lg lg:text-xl mb-4 max-w-3xl mx-auto leading-relaxed transition-colors duration-500 ${
               isDarkMode ? 'text-gray-400' : 'text-slate-600'
             }`} style={{ fontFamily: 'var(--font-inter)' }}>
-              Your secure window into production systems.{" "}
+              Secure ephemeral access to <strong>AWS</strong>, <strong>Azure</strong>, and <strong>GCP</strong> production systems.{" "}
               <span className={`font-semibold ${
                 isDarkMode ? 'text-blue-300' : 'text-indigo-700'
               }`}>
-                Limited access, complete visibility, zero risk.
+                Time-limited cloud console access with complete audit trails.
               </span>
-              {" "}Enterprise-grade debugging for external teams.
+              {" "}Enterprise-grade <strong>zero-trust security</strong> for external teams and contractors.
             </p>
 
             <div className={`mb-8 max-w-3xl mx-auto p-4 rounded-2xl border backdrop-blur-sm transition-all duration-500 ${
@@ -2721,5 +2724,6 @@ export default function LandingPage() {
         </div>
       </footer>
     </div>
+    </>
   )
 }

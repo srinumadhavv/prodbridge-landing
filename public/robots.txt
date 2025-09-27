@@ -1,0 +1,49 @@
+# robots.txt for Ephimera - Secure Cloud Production Access Platform
+# This file tells search engine crawlers which pages to access on your site.
+
+User-agent: *
+Allow: /
+
+# Specific instructions for Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Allow all major search engines
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+# Block common spam bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+# Sitemap location
+Sitemap: https://ephimera.cloud/sitemap.xml
+
+# Additional SEO optimization
+# Allow crawling of CSS and JS files for better rendering
+Allow: /css/
+Allow: /js/
+Allow: /_next/static/
+Allow: /images/
+Allow: /api/
+
+# Ensure important pages are crawlable
+Allow: /features
+Allow: /compare
+Allow: /blog
+Allow: /contact
+Allow: /pricing
+Allow: /security
+Allow: /compliance
