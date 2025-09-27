@@ -41,6 +41,16 @@ import { Input } from '@/components/ui/input'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import FAQSchema from '@/components/FAQSchema'
+import DemoRequestModal from '@/components/DemoRequestModal'
+import {
+  FeatureCardSkeleton,
+  FAQSkeleton,
+  ConsoleSkeleton,
+  HeroSkeleton,
+  NavSkeleton,
+  SectionSkeleton
+} from '@/components/SkeletonLoaders'
+import { useLoadingStates } from '@/hooks/useLoadingStates'
 
 // AWS Icons
 import {
@@ -80,6 +90,8 @@ export default function LandingPage() {
   const [isTracking, setIsTracking] = useState(true)
   const [isPiiMasked, setIsPiiMasked] = useState(true)
   const [currentUrl, setCurrentUrl] = useState('console.aws.amazon.com')
+  const [isDemoModalOpen, setIsDemoModalOpen] = useState(false)
+  const { loadingStates } = useLoadingStates()
 
   const cloudUrls = {
     aws: 'console.aws.amazon.com',
@@ -223,6 +235,11 @@ export default function LandingPage() {
   return (
     <>
       <FAQSchema faqs={faqs} />
+      <DemoRequestModal
+        isOpen={isDemoModalOpen}
+        onClose={() => setIsDemoModalOpen(false)}
+        isDarkMode={isDarkMode}
+      />
       <div className={`min-h-screen overflow-hidden relative transition-colors duration-500 ${
         isDarkMode
           ? 'bg-black text-white'
@@ -306,8 +323,11 @@ export default function LandingPage() {
       </div>
 
       {/* Navigation */}
-      <nav className="relative z-10 px-6 py-6 lg:px-12">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
+      {loadingStates.navigation ? (
+        <NavSkeleton isDarkMode={isDarkMode} />
+      ) : (
+        <nav className="relative z-10 px-6 py-6 lg:px-12">
+          <div className="max-w-7xl mx-auto flex justify-between items-center">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -610,10 +630,14 @@ export default function LandingPage() {
           </motion.div>
         </div>
       </nav>
+      )}
 
       {/* Hero Section */}
-      <section className="relative z-10 px-6 py-20 lg:px-12">
-        <div className="max-w-7xl mx-auto text-center">
+      {loadingStates.hero ? (
+        <HeroSkeleton isDarkMode={isDarkMode} />
+      ) : (
+        <section className="relative z-10 px-6 py-20 lg:px-12">
+          <div className="max-w-7xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -866,9 +890,13 @@ export default function LandingPage() {
           </motion.div>
         </div>
       </section>
+      )}
 
       {/* Features Grid */}
-      <section className="relative z-10 px-6 py-20 lg:px-12">
+      {loadingStates.features ? (
+        <SectionSkeleton isDarkMode={isDarkMode} title={true} />
+      ) : (
+        <section className="relative z-10 px-6 py-20 lg:px-12">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
@@ -966,9 +994,13 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Tech Stack Preview */}
-      <section className="relative z-10 px-6 py-20 lg:px-12">
+      {loadingStates.techStack ? (
+        <ConsoleSkeleton isDarkMode={isDarkMode} />
+      ) : (
+        <section className="relative z-10 px-6 py-20 lg:px-12">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
@@ -1069,9 +1101,13 @@ export default function LandingPage() {
           </motion.div>
         </div>
       </section>
+      )}
 
       {/* UI Preview Section */}
-      <section className="relative z-10 px-6 py-20 lg:px-12">
+      {loadingStates.uiPreview ? (
+        <ConsoleSkeleton isDarkMode={isDarkMode} />
+      ) : (
+        <section className="relative z-10 px-6 py-20 lg:px-12">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
@@ -2364,10 +2400,14 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+      )}
 
 
       {/* Problem/Solution Section */}
-      <section className="relative z-10 px-6 py-20 lg:px-12">
+      {loadingStates.problemSolution ? (
+        <SectionSkeleton isDarkMode={isDarkMode} title={true} />
+      ) : (
+        <section className="relative z-10 px-6 py-20 lg:px-12">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
@@ -2506,9 +2546,19 @@ export default function LandingPage() {
           </motion.div>
         </div>
       </section>
+      )}
 
       {/* FAQ Section */}
-      <section className="relative z-10 px-6 py-20 lg:px-12">
+      {loadingStates.faq ? (
+        <div className="px-6 py-20">
+          <div className="max-w-4xl mx-auto space-y-4">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <FAQSkeleton key={i} isDarkMode={isDarkMode} />
+            ))}
+          </div>
+        </div>
+      ) : (
+        <section className="relative z-10 px-6 py-20 lg:px-12">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
@@ -2604,9 +2654,17 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+      )}
 
       {/* CTA Section */}
-      <section className="relative z-10 px-6 py-20 lg:px-12">
+      {loadingStates.cta ? (
+        <div className="px-6 py-20">
+          <div className="max-w-4xl mx-auto text-center space-y-6">
+            <SectionSkeleton isDarkMode={isDarkMode} />
+          </div>
+        </div>
+      ) : (
+        <section className="relative z-10 px-6 py-20 lg:px-12">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -2642,30 +2700,21 @@ export default function LandingPage() {
               </span>
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex justify-center">
               <Button
                 size="lg"
                 className="bg-white text-black hover:bg-gray-200"
+                onClick={() => setIsDemoModalOpen(true)}
               >
                 Request Demo
                 <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className={`transition-all duration-300 ${
-                  isDarkMode
-                    ? 'border-white/40 text-white bg-transparent hover:bg-white/5 hover:border-white/60 hover:text-white'
-                    : 'border-slate-300 text-slate-700 hover:bg-slate-100 hover:border-slate-400 bg-white/50'
-                }`}
-              >
-                View Documentation
               </Button>
             </div>
 
           </motion.div>
         </div>
       </section>
+      )}
 
 
       {/* Footer */}
