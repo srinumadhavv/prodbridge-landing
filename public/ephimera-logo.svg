@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100" height="115" viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg">
+  <!-- Shield Background - Solid Purple -->
+  <path d="M50 10 C75 10, 90 22, 90 42 L90 68 C90 93, 70 108, 50 113 C30 108, 10 93, 10 68 L10 42 C10 22, 25 10, 50 10Z"
+        fill="#8B5CF6"/>
+
+  <!-- Darker purple left side for depth -->
+  <path d="M50 10 C25 10, 10 22, 10 42 L10 68 C10 93, 30 108, 50 113 L50 10Z"
+        fill="#7C3AED"
+        opacity="0.8"/>
+
+  <!-- Letter E in white -->
+  <g fill="#FFFFFF">
+    <!-- Top horizontal bar of E -->
+    <rect x="32" y="38" width="36" height="9" rx="1"/>
+
+    <!-- Middle horizontal bar of E -->
+    <rect x="32" y="54" width="28" height="8" rx="1"/>
+
+    <!-- Bottom horizontal bar of E -->
+    <rect x="32" y="69" width="36" height="9" rx="1"/>
+
+    <!-- Vertical bar of E -->
+    <rect x="32" y="38" width="11" height="40" rx="1"/>
+  </g>
+
+  <!-- Shield border for definition -->
+  <path d="M50 10 C75 10, 90 22, 90 42 L90 68 C90 93, 70 108, 50 113 C30 108, 10 93, 10 68 L10 42 C10 22, 25 10, 50 10Z"
+        fill="none"
+        stroke="#6B21A8"
+        stroke-width="2"/>
+</svg>

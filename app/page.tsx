@@ -333,9 +333,9 @@ export default function LandingPage() {
             animate={{ opacity: 1, x: 0 }}
             className="flex items-center space-x-3"
           >
-            {/* Ephimera Logo - Elegant Dissolving Particles */}
+            {/* Ephimera Shield Logo */}
             <motion.div
-              className="relative w-11 h-11"
+              className="relative w-12 h-14 flex items-center justify-center"
               whileHover={{
                 scale: 1.05,
                 transition: {
@@ -344,125 +344,10 @@ export default function LandingPage() {
               }}
               whileTap={{ scale: 0.98, transition: { duration: 0.1 } }}
             >
-              {/* Main container with elegant rounded corners */}
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-500 via-purple-600 to-indigo-600 rounded-3xl shadow-xl" />
-
-              {/* Ephemeral particle design */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative">
-                  <svg width="30" height="30" viewBox="0 0 40 40" className="text-white">
-                    <defs>
-                      {/* Gradients for fading effect */}
-                      <radialGradient id="centerParticle" cx="0.5" cy="0.5">
-                        <stop offset="0%" stopColor="currentColor" stopOpacity="1"/>
-                        <stop offset="70%" stopColor="currentColor" stopOpacity="0.8"/>
-                        <stop offset="100%" stopColor="currentColor" stopOpacity="0.6"/>
-                      </radialGradient>
-                      <radialGradient id="fadeParticle" cx="0.5" cy="0.5">
-                        <stop offset="0%" stopColor="currentColor" stopOpacity="0.7"/>
-                        <stop offset="100%" stopColor="currentColor" stopOpacity="0.2"/>
-                      </radialGradient>
-                    </defs>
-
-                    {/* Central core - represents the access point */}
-                    <circle cx="20" cy="20" r="4" fill="url(#centerParticle)"/>
-
-                    {/* Dissolving particles - represent ephemeral nature */}
-                    <motion.g
-                      animate={{
-                        opacity: [0.8, 0.3, 0.8],
-                        scale: [1, 1.1, 1],
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
-                    >
-                      {/* Outer ring of particles */}
-                      <circle cx="12" cy="12" r="2" fill="url(#fadeParticle)" opacity="0.6"/>
-                      <circle cx="28" cy="12" r="1.5" fill="url(#fadeParticle)" opacity="0.5"/>
-                      <circle cx="32" cy="20" r="1.8" fill="url(#fadeParticle)" opacity="0.7"/>
-                      <circle cx="28" cy="28" r="1.2" fill="url(#fadeParticle)" opacity="0.4"/>
-                      <circle cx="12" cy="28" r="1.6" fill="url(#fadeParticle)" opacity="0.6"/>
-                      <circle cx="8" cy="20" r="1.3" fill="url(#fadeParticle)" opacity="0.5"/>
-                    </motion.g>
-
-                    {/* Inner ring - more solid */}
-                    <motion.g
-                      animate={{
-                        rotate: 360,
-                        opacity: [0.9, 0.6, 0.9],
-                      }}
-                      transition={{
-                        rotate: {
-                          duration: 20,
-                          repeat: Infinity,
-                          ease: "linear"
-                        },
-                        opacity: {
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }
-                      }}
-                    >
-                      <circle cx="16" cy="16" r="1.5" fill="currentColor" opacity="0.8"/>
-                      <circle cx="24" cy="16" r="1.2" fill="currentColor" opacity="0.7"/>
-                      <circle cx="24" cy="24" r="1.3" fill="currentColor" opacity="0.8"/>
-                      <circle cx="16" cy="24" r="1.1" fill="currentColor" opacity="0.6"/>
-                    </motion.g>
-
-                    {/* Connecting lines - represent temporary connections */}
-                    <motion.g
-                      stroke="currentColor"
-                      strokeWidth="1"
-                      opacity="0.3"
-                      animate={{
-                        opacity: [0.1, 0.4, 0.1],
-                      }}
-                      transition={{
-                        duration: 4,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
-                    >
-                      <path d="M16 16 L20 20" strokeLinecap="round"/>
-                      <path d="M24 16 L20 20" strokeLinecap="round"/>
-                      <path d="M24 24 L20 20" strokeLinecap="round"/>
-                      <path d="M16 24 L20 20" strokeLinecap="round"/>
-                    </motion.g>
-                  </svg>
-                </div>
-              </div>
-
-              {/* Elegant inner highlight */}
-              <div className="absolute inset-[3px] bg-gradient-to-br from-white/20 via-white/5 to-transparent rounded-2xl" />
-
-              {/* Sophisticated outer glow */}
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-400 via-purple-500 to-indigo-500 rounded-3xl blur-lg opacity-25 -z-10 scale-110" />
-
-              {/* Ephemeral shimmer effect */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-transparent rounded-3xl opacity-0"
-                whileHover={{
-                  opacity: [0, 0.2, 0],
-                  transition: { duration: 1, ease: "easeInOut" }
-                }}
-              />
-
-              {/* Gentle pulsing aura */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-violet-400 via-purple-500 to-indigo-500 rounded-3xl opacity-5 -z-5"
-                animate={{
-                  scale: [1, 1.02, 1],
-                  opacity: [0.05, 0.02, 0.05],
-                }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
+              <img
+                src="/ephimera-logo.png"
+                alt="Ephimera"
+                className="w-full h-full object-contain drop-shadow-lg"
               />
             </motion.div>
             <div className="flex flex-col">
@@ -2724,30 +2609,12 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-2 mb-4 md:mb-0">
-              {/* Small Ephimera Logo for Footer */}
-              <div className="relative w-8 h-8">
-                <div className="absolute inset-0 bg-gradient-to-br from-violet-500 via-purple-600 to-indigo-600 rounded-2xl" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <svg width="18" height="18" viewBox="0 0 40 40" className="text-white scale-75">
-                    {/* Central core */}
-                    <circle cx="20" cy="20" r="3" fill="currentColor" opacity="0.9"/>
-
-                    {/* Outer particles */}
-                    <circle cx="12" cy="12" r="1.5" fill="currentColor" opacity="0.6"/>
-                    <circle cx="28" cy="12" r="1" fill="currentColor" opacity="0.5"/>
-                    <circle cx="32" cy="20" r="1.2" fill="currentColor" opacity="0.7"/>
-                    <circle cx="28" cy="28" r="0.8" fill="currentColor" opacity="0.4"/>
-                    <circle cx="12" cy="28" r="1.1" fill="currentColor" opacity="0.6"/>
-                    <circle cx="8" cy="20" r="0.9" fill="currentColor" opacity="0.5"/>
-
-                    {/* Inner ring */}
-                    <circle cx="16" cy="16" r="1" fill="currentColor" opacity="0.8"/>
-                    <circle cx="24" cy="16" r="0.8" fill="currentColor" opacity="0.7"/>
-                    <circle cx="24" cy="24" r="0.9" fill="currentColor" opacity="0.8"/>
-                    <circle cx="16" cy="24" r="0.7" fill="currentColor" opacity="0.6"/>
-                  </svg>
-                </div>
-              </div>
+              {/* Small Ephimera Shield Logo for Footer */}
+              <img
+                src="/ephimera-logo.png"
+                alt="Ephimera"
+                className="w-8 h-9 object-contain drop-shadow-md"
+              />
               <span className="text-sm text-gray-400">© 2026 Ephimera</span>
             </div>
 
