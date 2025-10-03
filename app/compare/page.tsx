@@ -262,26 +262,25 @@ export default function ComparePage() {
               animate={{ opacity: 1, x: 0 }}
               className="flex items-center space-x-3"
             >
-              <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-                <ArrowLeft className="w-5 h-5" />
-                <span className="text-2xl font-bold" style={{ fontFamily: 'var(--font-poppins)' }}>
-                  <span className={`bg-gradient-to-r bg-clip-text text-transparent ${
-                    isDarkMode
-                      ? 'from-violet-200 via-purple-300 to-indigo-200'
-                      : 'from-violet-700 via-purple-800 to-indigo-700'
-                  }`}>EPH</span>
-                  <span className={`bg-gradient-to-r bg-clip-text text-transparent font-light text-3xl relative -top-0.5 ${
-                    isDarkMode
-                      ? 'from-violet-300 via-purple-200 to-violet-100'
-                      : 'from-violet-600 via-purple-700 to-violet-800'
-                  }`}>i</span>
-                  <span className={`bg-gradient-to-r bg-clip-text text-transparent ${
-                    isDarkMode
-                      ? 'from-purple-200 via-indigo-300 to-violet-200'
-                      : 'from-purple-700 via-indigo-800 to-violet-700'
-                  }`}>MERA</span>
-                  <span className="text-sm ml-2 font-medium">Compare</span>
-                </span>
+              <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
+                <ArrowLeft className="w-5 h-5 mr-3" />
+                <div className="flex flex-col">
+                  <div className={`text-sm font-medium tracking-wider uppercase ${
+                    isDarkMode ? 'text-gray-500' : 'text-gray-400'
+                  }`}>
+                    By Ephimera
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl font-bold">
+                      <span className={`bg-gradient-to-r bg-clip-text text-transparent ${
+                        isDarkMode
+                          ? 'from-purple-300 via-pink-300 to-purple-300'
+                          : 'from-purple-700 via-pink-700 to-purple-700'
+                      }`}>Grant</span>
+                    </span>
+                    <span className={`text-sm font-medium ${isDarkMode ? 'text-gray-400' : 'text-slate-600'}`}>Compare</span>
+                  </div>
+                </div>
               </Link>
             </motion.div>
 
@@ -400,16 +399,16 @@ export default function ComparePage() {
               Why Choose{" "}
               <span className={`bg-gradient-to-r bg-clip-text text-transparent ${
                 isDarkMode
-                  ? 'from-violet-400 via-purple-400 to-indigo-400'
-                  : 'from-violet-600 via-purple-600 to-indigo-600'
+                  ? 'from-purple-300 via-pink-300 to-purple-300'
+                  : 'from-purple-700 via-pink-700 to-purple-700'
               }`}>
-                EPHIMERA
+                Grant
               </span>
             </h1>
             <p className={`text-lg lg:text-xl leading-relaxed max-w-3xl mx-auto mb-8 ${
               isDarkMode ? 'text-gray-400' : 'text-slate-600'
             }`}>
-              See how EPHIMERA compares to traditional SSH access and existing enterprise solutions.
+              See how Grant compares to traditional SSH access and existing enterprise solutions.
             </p>
 
             {/* Comparison Toggle */}
@@ -481,7 +480,7 @@ export default function ComparePage() {
                 <div className="text-center">
                   <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-lg bg-violet-500/10 text-violet-400">
                     <Star className="w-4 h-4" />
-                    <span className="font-semibold">EPHIMERA</span>
+                    <span className="font-semibold">Grant</span>
                   </div>
                   <p className="text-sm text-gray-500 mt-1">Modern ephemeral access</p>
                 </div>
@@ -538,7 +537,7 @@ export default function ComparePage() {
                       </div>
                     </div>
 
-                    {/* EPHIMERA */}
+                    {/* Grant */}
                     <div className="text-center">
                       <div className={`inline-flex items-center space-x-2 px-3 py-2 rounded-lg border ${
                         getStatusBg(feature.ephimera.status)

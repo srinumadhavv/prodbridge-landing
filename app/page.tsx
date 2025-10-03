@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import {
   Shield,
   Zap,
@@ -34,7 +35,8 @@ import {
   Eye,
   EyeOff,
   Settings,
-  UserCheck
+  UserCheck,
+  X
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -92,6 +94,7 @@ export default function LandingPage() {
   const [currentUrl, setCurrentUrl] = useState('console.aws.amazon.com')
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false)
   const { loadingStates } = useLoadingStates()
+  const router = useRouter()
 
   const cloudUrls = {
     aws: 'console.aws.amazon.com',
@@ -203,16 +206,16 @@ export default function LandingPage() {
 
   const faqs = [
     {
-      question: "Why do I need Ephimera?",
-      answer: "If you work with external teams (consultants, contractors, vendors, partners) who need to debug production issues, Ephimera solves critical problems: eliminating shared credentials, providing complete audit trails, automatic PII masking, and instant access that expires automatically. It turns a risky, manual process into a secure, streamlined workflow."
+      question: "Why do I need Grant?",
+      answer: "If you work with external teams (consultants, contractors, vendors, partners) who need to debug production issues, Grant solves critical problems: eliminating shared credentials, providing complete audit trails, automatic PII masking, and instant access that expires automatically. It turns a risky, manual process into a secure, streamlined workflow."
     },
     {
-      question: "How secure is Ephimera compared to traditional SSH access?",
-      answer: "Ephimera provides enterprise-grade security with automatic session recording, PII masking, and time-limited access. Unlike SSH, every action is logged and audited, with no direct server access or permanent credentials."
+      question: "How secure is Grant compared to traditional SSH access?",
+      answer: "Grant provides enterprise-grade security with automatic session recording, PII masking, and time-limited access. Unlike SSH, every action is logged and audited, with no direct server access or permanent credentials."
     },
     {
-      question: "What compliance standards does Ephimera meet?",
-      answer: "Ephimera is designed to meet SOC 2 Type II, HIPAA, and GDPR requirements. All sessions are encrypted end-to-end, with complete audit trails and automatic data masking for sensitive information."
+      question: "What compliance standards does Grant meet?",
+      answer: "Grant is designed to meet SOC 2 Type II, HIPAA, and GDPR requirements. All sessions are encrypted end-to-end, with complete audit trails and automatic data masking for sensitive information."
     },
     {
       question: "How quickly can external teams start debugging?",
@@ -223,8 +226,8 @@ export default function LandingPage() {
       answer: "Yes, you have granular control. Set specific permissions for databases, logs, metrics, and services. Access is automatically time-limited and expires based on your security policies."
     },
     {
-      question: "Does Ephimera work with my existing cloud setup?",
-      answer: "Ephimera supports AWS, Azure, and Google Cloud. It integrates seamlessly with your existing infrastructure without requiring changes to your current setup."
+      question: "Does Grant work with my existing cloud setup?",
+      answer: "Grant supports AWS, Azure, and Google Cloud. It integrates seamlessly with your existing infrastructure without requiring changes to your current setup."
     },
     {
       question: "How is pricing structured?",
@@ -331,74 +334,21 @@ export default function LandingPage() {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex items-center space-x-3"
+            className="flex items-center"
           >
-            {/* Ephimera Shield Logo */}
-            <motion.div
-              className="relative w-12 h-14 flex items-center justify-center"
-              whileHover={{
-                scale: 1.05,
-                transition: {
-                  scale: { type: "spring", stiffness: 400, damping: 25 }
-                }
-              }}
-              whileTap={{ scale: 0.98, transition: { duration: 0.1 } }}
-            >
-              <img
-                src="/ephimera-logo.png"
-                alt="Ephimera"
-                className="w-full h-full object-contain drop-shadow-lg"
-              />
-            </motion.div>
             <div className="flex flex-col">
-              <div className="text-2xl font-bold tracking-wider relative" style={{ fontFamily: 'var(--font-poppins)' }}>
-                {/* Main brand name with unique styling */}
-                <span className={`bg-gradient-to-r bg-clip-text text-transparent ${
-                  isDarkMode
-                    ? 'from-violet-200 via-purple-300 to-indigo-200'
-                    : 'from-violet-700 via-purple-800 to-indigo-700'
-                }`}>EPH</span>
-                <span className={`bg-gradient-to-r bg-clip-text text-transparent font-light text-3xl relative -top-0.5 ${
-                  isDarkMode
-                    ? 'from-violet-300 via-purple-200 to-violet-100'
-                    : 'from-violet-600 via-purple-700 to-violet-800'
-                }`}>i</span>
-                <span className={`bg-gradient-to-r bg-clip-text text-transparent ${
-                  isDarkMode
-                    ? 'from-purple-200 via-indigo-300 to-violet-200'
-                    : 'from-purple-700 via-indigo-800 to-violet-700'
-                }`}>MERA</span>
-
-                {/* Subtle particle dots after the name */}
-                <div className="absolute -right-4 top-1/2 -translate-y-1/2 flex space-x-1">
-                  <motion.div
-                    className={`w-1 h-1 rounded-full ${
-                      isDarkMode ? 'bg-violet-400' : 'bg-violet-600'
-                    }`}
-                    animate={{ opacity: [0.3, 0.8, 0.3] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: 0 }}
-                  />
-                  <motion.div
-                    className={`w-0.5 h-0.5 rounded-full ${
-                      isDarkMode ? 'bg-purple-400' : 'bg-purple-600'
-                    }`}
-                    animate={{ opacity: [0.2, 0.6, 0.2] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
-                  />
-                  <motion.div
-                    className={`w-0.5 h-0.5 rounded-full ${
-                      isDarkMode ? 'bg-indigo-400' : 'bg-indigo-600'
-                    }`}
-                    animate={{ opacity: [0.1, 0.4, 0.1] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
-                  />
-                </div>
-              </div>
-              <div className={`text-[9px] font-medium tracking-[0.2em] uppercase transition-colors duration-500 ${
-                isDarkMode ? 'text-gray-500' : 'text-gray-600'
+              <div className={`text-sm font-medium tracking-wider uppercase ${
+                isDarkMode ? 'text-gray-500' : 'text-gray-400'
               }`} style={{ fontFamily: 'var(--font-inter)' }}>
-                Secure Production Access
+                By Ephimera
               </div>
+              <h1 className="text-4xl font-black tracking-tight" style={{ fontFamily: 'var(--font-poppins)' }}>
+                <span className={`bg-gradient-to-r bg-clip-text text-transparent ${
+                  isDarkMode
+                    ? 'from-purple-300 via-pink-300 to-purple-300'
+                    : 'from-purple-700 via-pink-700 to-purple-700'
+                }`}>Grant</span>
+              </h1>
             </div>
           </motion.div>
 
@@ -442,6 +392,14 @@ export default function LandingPage() {
               style={{ fontFamily: 'var(--font-poppins)' }}
             >
               Features
+            </Link>
+
+            <Link
+              href="/share"
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105 bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700 shadow-lg`}
+              style={{ fontFamily: 'var(--font-poppins)' }}
+            >
+              Ephimera Share
             </Link>
 
             {/* Theme Toggle */}
@@ -521,33 +479,78 @@ export default function LandingPage() {
       {loadingStates.hero ? (
         <HeroSkeleton isDarkMode={isDarkMode} />
       ) : (
-        <section className="relative z-10 px-6 py-20 lg:px-12">
+        <section className="relative z-10 px-6 pt-20 pb-8 lg:px-12">
           <div className="max-w-7xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Badge className="mb-4 bg-blue-500/10 text-blue-400 border-blue-500/50">
-              <Zap className="w-3 h-3 mr-1" />
-              Launching Soon
-            </Badge>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              <Badge className="mb-6 bg-blue-500/10 text-blue-400 border-blue-500/50">
+                <Zap className="w-3 h-3 mr-1" />
+                Launching Soon
+              </Badge>
+            </motion.div>
 
-            <h1 className={`text-4xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight tracking-tight ${
-              isDarkMode
-                ? 'bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent'
-                : 'bg-gradient-to-r from-slate-900 via-indigo-800 to-slate-900 bg-clip-text text-transparent'
-            }`} style={{ fontFamily: 'var(--font-poppins)' }}>
-              Peek Into{" "}
+            {/* Product Name - Grant */}
+            <motion.div
+              className="mb-4"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+            >
+              <h1 className="text-5xl lg:text-7xl font-black tracking-tight leading-none" style={{ fontFamily: 'var(--font-poppins)' }}>
+                <motion.span
+                  className={`bg-gradient-to-r ${
+                    isDarkMode
+                      ? 'from-purple-400 via-pink-400 to-purple-500'
+                      : 'from-purple-600 via-pink-600 to-purple-700'
+                  } bg-clip-text text-transparent`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                >
+                  Grant
+                </motion.span>
+              </h1>
+              <motion.div
+                className={`text-sm font-medium tracking-wider uppercase mt-1 ${
+                  isDarkMode ? 'text-gray-500' : 'text-slate-400'
+                }`}
+                style={{ fontFamily: 'var(--font-inter)' }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+              >
+                By Ephimera
+              </motion.div>
+            </motion.div>
+
+            <motion.h2
+              className={`text-3xl lg:text-5xl xl:text-6xl font-bold mb-4 leading-tight tracking-tight ${
+                isDarkMode
+                  ? 'bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent'
+                  : 'bg-gradient-to-r from-slate-900 via-indigo-800 to-slate-900 bg-clip-text text-transparent'
+              }`}
+              style={{ fontFamily: 'var(--font-poppins)' }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.4 }}
+            >
+              Ephemeral Cloud{" "}
               <span className={`inline-block ${
                 isDarkMode
                   ? 'bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent'
                   : 'bg-gradient-to-r from-indigo-600 to-purple-700 bg-clip-text text-transparent'
               }`}>
-                Production
+                Access
               </span>
-              <br />
-              Without the{" "}
+              {" "}Without the{" "}
               <span className={`relative inline-block ${
                 isDarkMode
                   ? 'bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent'
@@ -562,43 +565,60 @@ export default function LandingPage() {
                   } rounded-full`}
                   initial={{ width: 0 }}
                   animate={{ width: '100%' }}
-                  transition={{ delay: 1, duration: 0.8, ease: "easeOut" }}
+                  transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
                 />
               </span>
-            </h1>
+            </motion.h2>
 
-            <p className={`text-lg lg:text-xl mb-4 max-w-3xl mx-auto leading-relaxed transition-colors duration-500 ${
-              isDarkMode ? 'text-gray-400' : 'text-slate-600'
-            }`} style={{ fontFamily: 'var(--font-inter)' }}>
-              Secure ephemeral access to <strong>AWS</strong>, <strong>Azure</strong>, and <strong>GCP</strong> production systems.{" "}
+            <motion.p
+              className={`text-lg lg:text-xl mb-4 max-w-3xl mx-auto leading-relaxed transition-colors duration-500 ${
+                isDarkMode ? 'text-gray-400' : 'text-slate-600'
+              }`}
+              style={{ fontFamily: 'var(--font-inter)' }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.6 }}
+            >
+              Secure, temporary credentials for <strong>AWS</strong>, <strong>Azure</strong>, and <strong>GCP</strong>.{" "}
               <span className={`font-semibold ${
                 isDarkMode ? 'text-blue-300' : 'text-indigo-700'
               }`}>
-                Time-limited cloud console access with complete audit trails.
+                Self-hosted, role-based access with complete audit trails.
               </span>
-              {" "}Enterprise-grade <strong>zero-trust security</strong> for external teams and contractors.
-            </p>
+              {" "}Reduce security risk with time-limited credentials that automatically expire.
+            </motion.p>
 
-            <div className={`mb-8 max-w-3xl mx-auto p-4 rounded-2xl border backdrop-blur-sm transition-all duration-500 ${
-              isDarkMode
-                ? 'bg-green-500/10 border-green-400/20 text-green-300'
-                : 'bg-green-50 border-green-200 text-green-800'
-            }`}>
+            <motion.div
+              className={`mb-4 max-w-3xl mx-auto p-4 rounded-2xl border backdrop-blur-sm transition-all duration-500 ${
+                isDarkMode
+                  ? 'bg-green-500/10 border-green-400/20 text-green-300'
+                  : 'bg-green-50 border-green-200 text-green-800'
+              }`}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+            >
               <div className="flex items-center justify-center gap-2 text-sm font-medium">
                 <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
                 <span style={{ fontFamily: 'var(--font-poppins)' }}>
                   Self-hosted deployment • Your data never leaves your infrastructure
                 </span>
               </div>
-            </div>
+            </motion.div>
+          </motion.div>
+          </div>
+        </section>
+      )}
 
-            {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12 max-w-4xl mx-auto"
-            >
+      {/* Stats Section */}
+      <section className="relative z-10 px-6 pb-12 lg:px-12">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto"
+        >
               {stats.map((stat, index) => (
                 <motion.div
                   key={index}
@@ -650,9 +670,209 @@ export default function LandingPage() {
                   </div>
                 </motion.div>
               ))}
-            </motion.div>
+        </motion.div>
+      </div>
+      </section>
 
-            {/* Email Signup */}
+      {/* Side Banner - Grant Alpha Notice */}
+      <motion.div
+        initial={{ x: -300, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ delay: 1.2, duration: 0.8, type: "spring", stiffness: 100 }}
+        className="fixed left-0 bottom-32 z-50 hidden lg:block"
+      >
+        <button
+          onClick={() => {
+            // Create Portal Gateway overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'portal-overlay';
+            overlay.style.cssText = `
+              position: fixed;
+              inset: 0;
+              z-index: 9999;
+              background: rgba(0, 0, 0, 0);
+              pointer-events: none;
+              overflow: hidden;
+              transition: background 0.4s ease-out;
+            `;
+            document.body.appendChild(overlay);
+
+            // Fade to black background
+            setTimeout(() => {
+              overlay.style.background = 'rgba(0, 0, 0, 1)';
+            }, 10);
+
+            // Create portal circle
+            const portal = document.createElement('div');
+            portal.style.cssText = `
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, -50%) scale(0);
+              width: 200px;
+              height: 200px;
+              border-radius: 50%;
+              border: 4px solid transparent;
+              background:
+                linear-gradient(#000, #000) padding-box,
+                linear-gradient(135deg,
+                  rgb(147, 51, 234) 0%,
+                  rgb(219, 39, 119) 50%,
+                  rgb(147, 51, 234) 100%
+                ) border-box;
+              box-shadow:
+                0 0 60px 20px rgba(147, 51, 234, 0.8),
+                0 0 100px 40px rgba(219, 39, 119, 0.6),
+                inset 0 0 60px rgba(147, 51, 234, 0.4);
+              animation: portalOpenClose 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            `;
+            overlay.appendChild(portal);
+
+            // Add inner glow
+            const innerGlow = document.createElement('div');
+            innerGlow.style.cssText = `
+              position: absolute;
+              inset: 10px;
+              border-radius: 50%;
+              background: radial-gradient(circle at center,
+                rgba(147, 51, 234, 0.3) 0%,
+                rgba(219, 39, 119, 0.2) 50%,
+                transparent 70%
+              );
+              animation: portalGlow 1.4s ease-out forwards;
+            `;
+            portal.appendChild(innerGlow);
+
+            // Create outer circle (purple - matches w-96 from Share page)
+            const outerCircle = document.createElement('div');
+            outerCircle.style.cssText = `
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, -50%);
+              width: 384px;
+              height: 384px;
+              border-radius: 50%;
+              border: 2px solid rgba(147, 51, 234, 0);
+              animation: circleClose 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+              animation-delay: 0.5s;
+            `;
+            overlay.appendChild(outerCircle);
+
+            // Create middle circle (pink - matches w-72 from Share page)
+            const middleCircle = document.createElement('div');
+            middleCircle.style.cssText = `
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, -50%);
+              width: 288px;
+              height: 288px;
+              border-radius: 50%;
+              border: 2px solid rgba(219, 39, 119, 0);
+              animation: circleClose 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+              animation-delay: 0.6s;
+            `;
+            overlay.appendChild(middleCircle);
+
+            // Add CSS animations
+            const style = document.createElement('style');
+            style.textContent = `
+              @keyframes portalOpenClose {
+                0% {
+                  transform: translate(-50%, -50%) scale(0) rotate(0deg);
+                  opacity: 0;
+                }
+                25% {
+                  opacity: 1;
+                  transform: translate(-50%, -50%) scale(15) rotate(180deg);
+                }
+                50% {
+                  transform: translate(-50%, -50%) scale(15) rotate(180deg);
+                }
+                100% {
+                  transform: translate(-50%, -50%) scale(0) rotate(360deg);
+                  opacity: 0;
+                }
+              }
+              @keyframes portalGlow {
+                0% {
+                  opacity: 0;
+                }
+                25% {
+                  opacity: 1;
+                }
+                50% {
+                  opacity: 1;
+                }
+                100% {
+                  opacity: 0;
+                }
+              }
+              @keyframes circleClose {
+                0% {
+                  transform: translate(-50%, -50%) scale(15);
+                  border-color: rgba(147, 51, 234, 0);
+                  opacity: 0;
+                }
+                30% {
+                  border-color: rgba(147, 51, 234, 0.5);
+                  opacity: 1;
+                }
+                100% {
+                  transform: translate(-50%, -50%) scale(0);
+                  border-color: rgba(147, 51, 234, 0.8);
+                  opacity: 0;
+                }
+              }
+            `;
+            document.head.appendChild(style);
+
+            // Navigate after animation
+            setTimeout(() => {
+              document.querySelectorAll('.portal-overlay').forEach(el => el.remove());
+              window.location.href = '/share';
+            }, 1500);
+          }}
+          className={`relative group cursor-pointer`}
+        >
+          <div className={`p-4 pr-8 rounded-r-2xl shadow-2xl backdrop-blur-xl transition-all duration-300 group-hover:pr-12 ${
+            isDarkMode
+              ? 'bg-gradient-to-r from-purple-600/90 to-pink-600/90 border-r-4 border-purple-400'
+              : 'bg-gradient-to-r from-purple-600 to-pink-600 border-r-4 border-purple-400'
+          }`}>
+            <div className="flex flex-col gap-2 text-white">
+              <div className="flex items-center gap-2">
+                <Badge className="bg-yellow-400/20 text-yellow-200 border-yellow-300/50 text-xs">
+                  ALPHA
+                </Badge>
+              </div>
+              <div className="font-bold text-sm">
+                Grant is in alpha
+              </div>
+              <div className="text-xs opacity-90">
+                Try{' '}
+                <span className="font-semibold underline decoration-2 underline-offset-2">
+                  Share by Ephimera
+                </span>
+              </div>
+              <div className="flex items-center gap-1 text-xs font-medium mt-1 opacity-75 group-hover:opacity-100 transition-opacity">
+                <span>Available Now</span>
+                <motion.div
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+                >
+                  <ArrowRight className="w-3 h-3" />
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </button>
+      </motion.div>
+
+      {/* Email Signup */}
+      <section className="relative z-10 px-6 pb-20 lg:px-12">
+        <div className="max-w-7xl mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, y: 30, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -772,10 +992,8 @@ export default function LandingPage() {
                 Join 500+ engineering teams waiting for early access
               </p>
             </motion.div>
-          </motion.div>
         </div>
       </section>
-      )}
 
       {/* Features Grid */}
       {loadingStates.features ? (
@@ -2474,7 +2692,7 @@ export default function LandingPage() {
               <span className={`font-semibold ${
                 isDarkMode ? 'text-green-300' : 'text-emerald-700'
               }`}>
-                Ephimera's security and features
+                Grant's security and features
               </span>
             </p>
           </motion.div>
@@ -2609,10 +2827,10 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-2 mb-4 md:mb-0">
-              {/* Small Ephimera Shield Logo for Footer */}
+              {/* Small Grant Shield Logo for Footer */}
               <img
                 src="/ephimera-logo.png"
-                alt="Ephimera"
+                alt="Grant"
                 className="w-8 h-9 object-contain drop-shadow-md"
               />
               <span className="text-sm text-gray-400">© 2026 Ephimera</span>

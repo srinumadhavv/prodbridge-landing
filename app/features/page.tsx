@@ -224,26 +224,25 @@ export default function FeaturesPage() {
               animate={{ opacity: 1, x: 0 }}
               className="flex items-center space-x-3"
             >
-              <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-                <ArrowLeft className="w-5 h-5" />
-                <span className="text-2xl font-bold" style={{ fontFamily: 'var(--font-poppins)' }}>
-                  <span className={`bg-gradient-to-r bg-clip-text text-transparent ${
-                    isDarkMode
-                      ? 'from-violet-200 via-purple-300 to-indigo-200'
-                      : 'from-violet-700 via-purple-800 to-indigo-700'
-                  }`}>EPH</span>
-                  <span className={`bg-gradient-to-r bg-clip-text text-transparent font-light text-3xl relative -top-0.5 ${
-                    isDarkMode
-                      ? 'from-violet-300 via-purple-200 to-violet-100'
-                      : 'from-violet-600 via-purple-700 to-violet-800'
-                  }`}>i</span>
-                  <span className={`bg-gradient-to-r bg-clip-text text-transparent ${
-                    isDarkMode
-                      ? 'from-purple-200 via-indigo-300 to-violet-200'
-                      : 'from-purple-700 via-indigo-800 to-violet-700'
-                  }`}>MERA</span>
-                  <span className="text-sm ml-2 font-medium">Features</span>
-                </span>
+              <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
+                <ArrowLeft className="w-5 h-5 mr-3" />
+                <div className="flex flex-col">
+                  <div className={`text-sm font-medium tracking-wider uppercase ${
+                    isDarkMode ? 'text-gray-500' : 'text-gray-400'
+                  }`}>
+                    By Ephimera
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl font-bold">
+                      <span className={`bg-gradient-to-r bg-clip-text text-transparent ${
+                        isDarkMode
+                          ? 'from-purple-300 via-pink-300 to-purple-300'
+                          : 'from-purple-700 via-pink-700 to-purple-700'
+                      }`}>Grant</span>
+                    </span>
+                    <span className={`text-sm font-medium ${isDarkMode ? 'text-gray-400' : 'text-slate-600'}`}>Features</span>
+                  </div>
+                </div>
               </Link>
             </motion.div>
 
